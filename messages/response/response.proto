@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package response;
 
-option go_package = "gitlab.com/hardcoin-marketplace-backend/interfaces/messages/response";
+option go_package = "gitlab.com/SeaOfWisdom/sow_proto/messages/response";
 
 enum StatusCode {
     OK = 0;
