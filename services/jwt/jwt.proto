@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package jwt;
+
+import "messages/response/response.proto";
+
+option go_package = "./jwt";
+
+service JwtService{
+		  rpc Ping(PingRequest) returns (PingResponse);
+		  rpc GenerateJwt(GenerateJwtRequest) returns (GenerateJwtResponse);
+    	  rpc DecodeJwt(DecodeJwtRequest) returns (DecodeJwtResponse);
+}
+
+message TokenBody {
+    	  string iss = 1;
+    	  string sub = 2;
+    	  int64 role = 3;
+    	  string web3_address = 4;
+    	  string status = 5;
+    	  string language = 6;
+}
+
+message PingRequest {
+}
+
+message PingResponse {
+        response.Status ret_status = 1;
+}
+
+message GenerateJwtRequest {
+		  TokenBody Token = 1;
+		  response.Status ret_status = 2;
+}
+
+message GenerateJwtResponse {
+		  string Token = 1;
+		  response.Status ret_status = 2;
+}
+
+message DecodeJwtRequest {
+		  string Token = 1;
+}
+
+message DecodeJwtResponse {
+    	  TokenBody body = 1;
+	 	  response.Status ret_status = 2;
+}

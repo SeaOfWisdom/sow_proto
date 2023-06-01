@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package lib;
+
+import "messages/response/response.proto";
+
+option go_package = "./lib";
+
+service LibService {
+		  rpc Ping(PingRequest) returns (PingResponse);
+}
+
+message PingRequest {
+}
+
+message PingResponse {
+        response.Status ret_status = 1;
+}
+

@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package contractor;
+
+import "messages/response/response.proto";
+
+option go_package = "./contractor";
+
+service ContractorService {
+		  rpc Ping(PingRequest) returns (PingResponse);
+  		  rpc PublishWork (PublishWorkRequest) returns(PublishWorkResponse);
+  		  rpc FollowTxStatus(FollowTxStatusRequest) returns (stream FollowTxStatusResponse) {}
+  		  rpc GetTxStatus(GetTxStatusRequest) returns (stream GetTxStatusResponse) {}
+}
+
+message PingRequest {
+}
+
+message PingResponse {
+        response.Status ret_status = 1;
+}
+
+message PublishWorkRequest {
+  		  string name = 1;
+  		  string author = 2;
+  		  string uri = 3;
+}
+
+message PublishWorkResponse {
+  		  string tx_hash = 1;
+		  response.Status ret_status = 2;
+}
+
+message FollowTxStatusRequest {
+  		  string tx_hash = 1;
+  		  string chain_id = 2;
+}
+
+message FollowTxStatusResponse {
+  		  bool status = 1; // 0 - Failed, 1 - Success 
+  		  string revert_reason = 2;
+}
+
+message GetTxStatusRequest {
+}
+
+message GetTxStatusResponse {
+}
