@@ -37,6 +37,7 @@ message PurchaseWorkRequest {
   string work_id = 1;
   string reader_address = 2;
   string price = 3;
+  string author_address = 4;
 }
 
 
