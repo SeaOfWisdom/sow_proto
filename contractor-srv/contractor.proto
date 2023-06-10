@@ -18,7 +18,7 @@ option go_package = "./;proto";
 service ContractorService {
   rpc PublishWork (PublishWorkRequest) returns(TxHashResponse);
 
-  rpc PurchaseWork (PublishWorkRequest) returns(TxHashResponse);
+  rpc PurchaseWork (PurchaseWorkRequest) returns(TxHashResponse);
 
   // rpc FollowTxStatus(TxStatusRequest) returns (stream TxStatusResponce) {}
 
