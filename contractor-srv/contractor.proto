@@ -18,8 +18,8 @@ option go_package = "./;proto";
 service ContractorService {
   rpc PublishWork (PublishWorkRequest) returns(PublishWorkResponce);
 
-  rpc FollowTxStatus(TxStatusRequest) returns (stream TxStatusResponce) {}
-  
+  // rpc FollowTxStatus(TxStatusRequest) returns (stream TxStatusResponce) {}
+
   rpc GetStatus(TxStatusRequest) returns (stream TxStatusResponce) {}
 }
 
@@ -41,6 +41,6 @@ message TxStatusRequest {
 }
 
 message TxStatusResponce {
-  bool status = 1; // 0 - Failed, 1 - Success 
+  bool status = 1; // 0 - Failed, 1 - Success
   string revert_reason = 2;
 }
