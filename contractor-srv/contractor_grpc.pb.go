@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ContractorServiceClient interface {
 	PublishWork(ctx context.Context, in *PublishWorkRequest, opts ...grpc.CallOption) (*PublishWorkResponce, error)
-	GetStatus(ctx context.Context, in *TxStatusRequest, opts ...grpc.CallOption) (ContractorService_GetStatusClient, error)
+	GetStatus(ctx context.Context, in *TxStatusRequest, opts ...grpc.CallOption) (*TxStatusResponce, error)
 }
 
 type contractorServiceClient struct {
@@ -43,36 +43,13 @@ func (c *contractorServiceClient) PublishWork(ctx context.Context, in *PublishWo
 	return out, nil
 }
 
-func (c *contractorServiceClient) GetStatus(ctx context.Context, in *TxStatusRequest, opts ...grpc.CallOption) (ContractorService_GetStatusClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ContractorService_ServiceDesc.Streams[0], "/pp.contractor.ContractorService/GetStatus", opts...)
+func (c *contractorServiceClient) GetStatus(ctx context.Context, in *TxStatusRequest, opts ...grpc.CallOption) (*TxStatusResponce, error) {
+	out := new(TxStatusResponce)
+	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/GetStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &contractorServiceGetStatusClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type ContractorService_GetStatusClient interface {
-	Recv() (*TxStatusResponce, error)
-	grpc.ClientStream
-}
-
-type contractorServiceGetStatusClient struct {
-	grpc.ClientStream
-}
-
-func (x *contractorServiceGetStatusClient) Recv() (*TxStatusResponce, error) {
-	m := new(TxStatusResponce)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	return out, nil
 }
 
 // ContractorServiceServer is the server API for ContractorService service.
@@ -80,7 +57,7 @@ func (x *contractorServiceGetStatusClient) Recv() (*TxStatusResponce, error) {
 // for forward compatibility
 type ContractorServiceServer interface {
 	PublishWork(context.Context, *PublishWorkRequest) (*PublishWorkResponce, error)
-	GetStatus(*TxStatusRequest, ContractorService_GetStatusServer) error
+	GetStatus(context.Context, *TxStatusRequest) (*TxStatusResponce, error)
 	mustEmbedUnimplementedContractorServiceServer()
 }
 
@@ -91,8 +68,8 @@ type UnimplementedContractorServiceServer struct {
 func (UnimplementedContractorServiceServer) PublishWork(context.Context, *PublishWorkRequest) (*PublishWorkResponce, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishWork not implemented")
 }
-func (UnimplementedContractorServiceServer) GetStatus(*TxStatusRequest, ContractorService_GetStatusServer) error {
-	return status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
+func (UnimplementedContractorServiceServer) GetStatus(context.Context, *TxStatusRequest) (*TxStatusResponce, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
 }
 func (UnimplementedContractorServiceServer) mustEmbedUnimplementedContractorServiceServer() {}
 
@@ -125,25 +102,22 @@ func _ContractorService_PublishWork_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ContractorService_GetStatus_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(TxStatusRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
+func _ContractorService_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TxStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
 	}
-	return srv.(ContractorServiceServer).GetStatus(m, &contractorServiceGetStatusServer{stream})
-}
-
-type ContractorService_GetStatusServer interface {
-	Send(*TxStatusResponce) error
-	grpc.ServerStream
-}
-
-type contractorServiceGetStatusServer struct {
-	grpc.ServerStream
-}
-
-func (x *contractorServiceGetStatusServer) Send(m *TxStatusResponce) error {
-	return x.ServerStream.SendMsg(m)
+	if interceptor == nil {
+		return srv.(ContractorServiceServer).GetStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pp.contractor.ContractorService/GetStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContractorServiceServer).GetStatus(ctx, req.(*TxStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 // ContractorService_ServiceDesc is the grpc.ServiceDesc for ContractorService service.
@@ -157,13 +131,11 @@ var ContractorService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "PublishWork",
 			Handler:    _ContractorService_PublishWork_Handler,
 		},
-	},
-	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "GetStatus",
-			Handler:       _ContractorService_GetStatus_Handler,
-			ServerStreams: true,
+			MethodName: "GetStatus",
+			Handler:    _ContractorService_GetStatus_Handler,
 		},
 	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "contractor.proto",
 }
