@@ -40,6 +40,10 @@ message PurchaseWorkRequest {
   string author_address = 4;
 }
 
+message PurchaseWorkResponse {
+  TxHashResponse readerTxStatus = 1;
+  TxHashResponse authorTxStatus = 2;
+}
 
 message TxHashResponse {
   string tx_hash = 1;
