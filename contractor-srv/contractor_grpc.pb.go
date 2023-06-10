@@ -22,7 +22,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ContractorServiceClient interface {
-	PublishWork(ctx context.Context, in *PublishWorkRequest, opts ...grpc.CallOption) (*PublishWorkResponce, error)
+	PublishWork(ctx context.Context, in *PublishWorkRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
+	PurchaseWork(ctx context.Context, in *PublishWorkRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
 	GetStatus(ctx context.Context, in *TxStatusRequest, opts ...grpc.CallOption) (*TxStatusResponce, error)
 }
 
@@ -34,9 +35,18 @@ func NewContractorServiceClient(cc grpc.ClientConnInterface) ContractorServiceCl
 	return &contractorServiceClient{cc}
 }
 
-func (c *contractorServiceClient) PublishWork(ctx context.Context, in *PublishWorkRequest, opts ...grpc.CallOption) (*PublishWorkResponce, error) {
-	out := new(PublishWorkResponce)
+func (c *contractorServiceClient) PublishWork(ctx context.Context, in *PublishWorkRequest, opts ...grpc.CallOption) (*TxHashResponse, error) {
+	out := new(TxHashResponse)
 	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/PublishWork", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *contractorServiceClient) PurchaseWork(ctx context.Context, in *PublishWorkRequest, opts ...grpc.CallOption) (*TxHashResponse, error) {
+	out := new(TxHashResponse)
+	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/PurchaseWork", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +66,8 @@ func (c *contractorServiceClient) GetStatus(ctx context.Context, in *TxStatusReq
 // All implementations must embed UnimplementedContractorServiceServer
 // for forward compatibility
 type ContractorServiceServer interface {
-	PublishWork(context.Context, *PublishWorkRequest) (*PublishWorkResponce, error)
+	PublishWork(context.Context, *PublishWorkRequest) (*TxHashResponse, error)
+	PurchaseWork(context.Context, *PublishWorkRequest) (*TxHashResponse, error)
 	GetStatus(context.Context, *TxStatusRequest) (*TxStatusResponce, error)
 	mustEmbedUnimplementedContractorServiceServer()
 }
@@ -65,8 +76,11 @@ type ContractorServiceServer interface {
 type UnimplementedContractorServiceServer struct {
 }
 
-func (UnimplementedContractorServiceServer) PublishWork(context.Context, *PublishWorkRequest) (*PublishWorkResponce, error) {
+func (UnimplementedContractorServiceServer) PublishWork(context.Context, *PublishWorkRequest) (*TxHashResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishWork not implemented")
+}
+func (UnimplementedContractorServiceServer) PurchaseWork(context.Context, *PublishWorkRequest) (*TxHashResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PurchaseWork not implemented")
 }
 func (UnimplementedContractorServiceServer) GetStatus(context.Context, *TxStatusRequest) (*TxStatusResponce, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
@@ -102,6 +116,24 @@ func _ContractorService_PublishWork_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ContractorService_PurchaseWork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PublishWorkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContractorServiceServer).PurchaseWork(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pp.contractor.ContractorService/PurchaseWork",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContractorServiceServer).PurchaseWork(ctx, req.(*PublishWorkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ContractorService_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TxStatusRequest)
 	if err := dec(in); err != nil {
@@ -130,6 +162,10 @@ var ContractorService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PublishWork",
 			Handler:    _ContractorService_PublishWork_Handler,
+		},
+		{
+			MethodName: "PurchaseWork",
+			Handler:    _ContractorService_PurchaseWork_Handler,
 		},
 		{
 			MethodName: "GetStatus",
