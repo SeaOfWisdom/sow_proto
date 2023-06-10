@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ContractorServiceClient interface {
 	PublishWork(ctx context.Context, in *PublishWorkRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
-	PurchaseWork(ctx context.Context, in *PurchaseWorkRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
+	PurchaseWork(ctx context.Context, in *PurchaseWorkRequest, opts ...grpc.CallOption) (*PurchaseWorkResponse, error)
 	GetStatus(ctx context.Context, in *TxStatusRequest, opts ...grpc.CallOption) (*TxStatusResponce, error)
 }
 
@@ -44,8 +44,8 @@ func (c *contractorServiceClient) PublishWork(ctx context.Context, in *PublishWo
 	return out, nil
 }
 
-func (c *contractorServiceClient) PurchaseWork(ctx context.Context, in *PurchaseWorkRequest, opts ...grpc.CallOption) (*TxHashResponse, error) {
-	out := new(TxHashResponse)
+func (c *contractorServiceClient) PurchaseWork(ctx context.Context, in *PurchaseWorkRequest, opts ...grpc.CallOption) (*PurchaseWorkResponse, error) {
+	out := new(PurchaseWorkResponse)
 	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/PurchaseWork", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -67,7 +67,7 @@ func (c *contractorServiceClient) GetStatus(ctx context.Context, in *TxStatusReq
 // for forward compatibility
 type ContractorServiceServer interface {
 	PublishWork(context.Context, *PublishWorkRequest) (*TxHashResponse, error)
-	PurchaseWork(context.Context, *PurchaseWorkRequest) (*TxHashResponse, error)
+	PurchaseWork(context.Context, *PurchaseWorkRequest) (*PurchaseWorkResponse, error)
 	GetStatus(context.Context, *TxStatusRequest) (*TxStatusResponce, error)
 	mustEmbedUnimplementedContractorServiceServer()
 }
@@ -79,7 +79,7 @@ type UnimplementedContractorServiceServer struct {
 func (UnimplementedContractorServiceServer) PublishWork(context.Context, *PublishWorkRequest) (*TxHashResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishWork not implemented")
 }
-func (UnimplementedContractorServiceServer) PurchaseWork(context.Context, *PurchaseWorkRequest) (*TxHashResponse, error) {
+func (UnimplementedContractorServiceServer) PurchaseWork(context.Context, *PurchaseWorkRequest) (*PurchaseWorkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PurchaseWork not implemented")
 }
 func (UnimplementedContractorServiceServer) GetStatus(context.Context, *TxStatusRequest) (*TxStatusResponce, error) {
