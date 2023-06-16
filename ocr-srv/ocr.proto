@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package ocr;
-option go_package = "./;proto";
+option go_package = "./proto";
 
 service OCR {
   rpc ExtractText (ExtractTextRequest) returns (ExtractTextResponse) {}
@@ -9,6 +9,7 @@ service OCR {
 
 message ExtractTextRequest {
   bytes image = 1;
+  bool isPaper = 2;
 }
 
 message ExtractTextResponse {
