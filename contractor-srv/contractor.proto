@@ -31,6 +31,8 @@ service ContractorService {
   rpc GetStatus(TxStatusRequest) returns (TxStatusResponse);
 
   rpc Faucet(FaucetRequest) returns (TxHashResponse);
+
+  rpc AddParticipant(AccountRequest) returns (TxHashResponse);
 }
 
 
