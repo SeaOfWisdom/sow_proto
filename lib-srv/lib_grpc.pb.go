@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LibraryServiceClient interface {
-	PurchasePaper(ctx context.Context, in *PurchasePaperRequest, opts ...grpc.CallOption) (*Status, error)
+	PurchasePaper(ctx context.Context, in *PurchasePaperRequest, opts ...grpc.CallOption) (*Null, error)
 }
 
 type libraryServiceClient struct {
@@ -33,8 +33,8 @@ func NewLibraryServiceClient(cc grpc.ClientConnInterface) LibraryServiceClient {
 	return &libraryServiceClient{cc}
 }
 
-func (c *libraryServiceClient) PurchasePaper(ctx context.Context, in *PurchasePaperRequest, opts ...grpc.CallOption) (*Status, error) {
-	out := new(Status)
+func (c *libraryServiceClient) PurchasePaper(ctx context.Context, in *PurchasePaperRequest, opts ...grpc.CallOption) (*Null, error) {
+	out := new(Null)
 	err := c.cc.Invoke(ctx, "/pp.contractor.LibraryService/PurchasePaper", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (c *libraryServiceClient) PurchasePaper(ctx context.Context, in *PurchasePa
 // All implementations must embed UnimplementedLibraryServiceServer
 // for forward compatibility
 type LibraryServiceServer interface {
-	PurchasePaper(context.Context, *PurchasePaperRequest) (*Status, error)
+	PurchasePaper(context.Context, *PurchasePaperRequest) (*Null, error)
 	mustEmbedUnimplementedLibraryServiceServer()
 }
 
@@ -54,7 +54,7 @@ type LibraryServiceServer interface {
 type UnimplementedLibraryServiceServer struct {
 }
 
-func (UnimplementedLibraryServiceServer) PurchasePaper(context.Context, *PurchasePaperRequest) (*Status, error) {
+func (UnimplementedLibraryServiceServer) PurchasePaper(context.Context, *PurchasePaperRequest) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PurchasePaper not implemented")
 }
 func (UnimplementedLibraryServiceServer) mustEmbedUnimplementedLibraryServiceServer() {}

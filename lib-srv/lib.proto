@@ -16,17 +16,16 @@ option go_package = "./;proto";
  **/
 
 service LibraryService {
-    rpc PurchasePaper (PurchasePaperRequest) returns(Status);
+    rpc PurchasePaper (PurchasePaperRequest) returns(Null);
 }
 
 
 message PurchasePaperRequest {
-    string readerAddress = 1;
+    string reader_address = 1;
+    string work_id = 2;
 }
 
-message Status {
-    string errorMsg = 1;
-}
+message Null {}
 
 
 

@@ -49,8 +49,8 @@ message PurchaseWorkRequest {
 }
 
 message PurchaseWorkResponse {
-  TxHashResponse readerTxStatus = 1;
-  TxHashResponse authorTxStatus = 2;
+  TxHashResponse reader_tx_status = 1;
+  TxHashResponse author_tx_tatus = 2;
 }
 
 message TxHashResponse {
