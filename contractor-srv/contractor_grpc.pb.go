@@ -24,9 +24,9 @@ const _ = grpc.SupportPackageIsVersion7
 type ContractorServiceClient interface {
 	PublishWork(ctx context.Context, in *PublishWorkRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
 	PurchaseWork(ctx context.Context, in *PurchaseWorkRequest, opts ...grpc.CallOption) (*PurchaseWorkResponse, error)
-	MakeAuthor(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxStatusResponse, error)
-	MakeAdmin(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxStatusResponse, error)
-	MakeReviewer(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxStatusResponse, error)
+	MakeAuthor(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
+	MakeAdmin(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
+	MakeReviewer(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
 	GetStatus(ctx context.Context, in *TxStatusRequest, opts ...grpc.CallOption) (*TxStatusResponse, error)
 	Faucet(ctx context.Context, in *FaucetRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
 }
@@ -57,8 +57,8 @@ func (c *contractorServiceClient) PurchaseWork(ctx context.Context, in *Purchase
 	return out, nil
 }
 
-func (c *contractorServiceClient) MakeAuthor(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxStatusResponse, error) {
-	out := new(TxStatusResponse)
+func (c *contractorServiceClient) MakeAuthor(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxHashResponse, error) {
+	out := new(TxHashResponse)
 	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/MakeAuthor", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -66,8 +66,8 @@ func (c *contractorServiceClient) MakeAuthor(ctx context.Context, in *AccountReq
 	return out, nil
 }
 
-func (c *contractorServiceClient) MakeAdmin(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxStatusResponse, error) {
-	out := new(TxStatusResponse)
+func (c *contractorServiceClient) MakeAdmin(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxHashResponse, error) {
+	out := new(TxHashResponse)
 	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/MakeAdmin", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -75,8 +75,8 @@ func (c *contractorServiceClient) MakeAdmin(ctx context.Context, in *AccountRequ
 	return out, nil
 }
 
-func (c *contractorServiceClient) MakeReviewer(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxStatusResponse, error) {
-	out := new(TxStatusResponse)
+func (c *contractorServiceClient) MakeReviewer(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxHashResponse, error) {
+	out := new(TxHashResponse)
 	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/MakeReviewer", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -108,9 +108,9 @@ func (c *contractorServiceClient) Faucet(ctx context.Context, in *FaucetRequest,
 type ContractorServiceServer interface {
 	PublishWork(context.Context, *PublishWorkRequest) (*TxHashResponse, error)
 	PurchaseWork(context.Context, *PurchaseWorkRequest) (*PurchaseWorkResponse, error)
-	MakeAuthor(context.Context, *AccountRequest) (*TxStatusResponse, error)
-	MakeAdmin(context.Context, *AccountRequest) (*TxStatusResponse, error)
-	MakeReviewer(context.Context, *AccountRequest) (*TxStatusResponse, error)
+	MakeAuthor(context.Context, *AccountRequest) (*TxHashResponse, error)
+	MakeAdmin(context.Context, *AccountRequest) (*TxHashResponse, error)
+	MakeReviewer(context.Context, *AccountRequest) (*TxHashResponse, error)
 	GetStatus(context.Context, *TxStatusRequest) (*TxStatusResponse, error)
 	Faucet(context.Context, *FaucetRequest) (*TxHashResponse, error)
 	mustEmbedUnimplementedContractorServiceServer()
@@ -126,13 +126,13 @@ func (UnimplementedContractorServiceServer) PublishWork(context.Context, *Publis
 func (UnimplementedContractorServiceServer) PurchaseWork(context.Context, *PurchaseWorkRequest) (*PurchaseWorkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PurchaseWork not implemented")
 }
-func (UnimplementedContractorServiceServer) MakeAuthor(context.Context, *AccountRequest) (*TxStatusResponse, error) {
+func (UnimplementedContractorServiceServer) MakeAuthor(context.Context, *AccountRequest) (*TxHashResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MakeAuthor not implemented")
 }
-func (UnimplementedContractorServiceServer) MakeAdmin(context.Context, *AccountRequest) (*TxStatusResponse, error) {
+func (UnimplementedContractorServiceServer) MakeAdmin(context.Context, *AccountRequest) (*TxHashResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MakeAdmin not implemented")
 }
-func (UnimplementedContractorServiceServer) MakeReviewer(context.Context, *AccountRequest) (*TxStatusResponse, error) {
+func (UnimplementedContractorServiceServer) MakeReviewer(context.Context, *AccountRequest) (*TxHashResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MakeReviewer not implemented")
 }
 func (UnimplementedContractorServiceServer) GetStatus(context.Context, *TxStatusRequest) (*TxStatusResponse, error) {

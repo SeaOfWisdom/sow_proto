@@ -20,11 +20,11 @@ service ContractorService {
 
   rpc PurchaseWork (PurchaseWorkRequest) returns(PurchaseWorkResponse);
 
-  rpc MakeAuthor (AccountRequest) returns(TxStatusResponse);
+  rpc MakeAuthor (AccountRequest) returns(TxHashResponse);
 
-  rpc MakeAdmin (AccountRequest) returns(TxStatusResponse);
+  rpc MakeAdmin (AccountRequest) returns(TxHashResponse);
 
-  rpc MakeReviewer (AccountRequest) returns(TxStatusResponse);
+  rpc MakeReviewer (AccountRequest) returns(TxHashResponse);
 
   // rpc FollowTxStatus(TxStatusRequest) returns (stream TxStatusResponce) {}
 
