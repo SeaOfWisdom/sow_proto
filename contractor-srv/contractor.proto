@@ -50,7 +50,7 @@ message PurchaseWorkRequest {
 
 message PurchaseWorkResponse {
   TxHashResponse reader_tx_status = 1;
-  TxHashResponse author_tx_tatus = 2;
+  TxHashResponse author_tx_status = 2;
 }
 
 message TxHashResponse {
