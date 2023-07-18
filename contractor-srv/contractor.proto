@@ -36,9 +36,10 @@ service ContractorService {
 
 message PublishWorkRequest {
   string name = 1;
-  string author = 2;
-  string uri = 3;
-  string price = 4;
+  string uri = 2;
+  string work_id = 3;
+  repeated string authors = 4;
+  string price = 5;
 }
 
 message PurchaseWorkRequest {
