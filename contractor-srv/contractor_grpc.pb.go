@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.5
-// source: contractor.proto
+// source: contractor-srv/contractor.proto
 
 package proto
 
@@ -24,6 +24,9 @@ const _ = grpc.SupportPackageIsVersion7
 type ContractorServiceClient interface {
 	PublishWork(ctx context.Context, in *PublishWorkRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
 	PurchaseWork(ctx context.Context, in *PurchaseWorkRequest, opts ...grpc.CallOption) (*PurchaseWorkResponse, error)
+	MakeAuthor(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxStatusResponse, error)
+	MakeAdmin(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxStatusResponse, error)
+	MakeReviewer(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxStatusResponse, error)
 	GetStatus(ctx context.Context, in *TxStatusRequest, opts ...grpc.CallOption) (*TxStatusResponse, error)
 	Faucet(ctx context.Context, in *FaucetRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
 }
@@ -54,6 +57,33 @@ func (c *contractorServiceClient) PurchaseWork(ctx context.Context, in *Purchase
 	return out, nil
 }
 
+func (c *contractorServiceClient) MakeAuthor(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxStatusResponse, error) {
+	out := new(TxStatusResponse)
+	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/MakeAuthor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *contractorServiceClient) MakeAdmin(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxStatusResponse, error) {
+	out := new(TxStatusResponse)
+	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/MakeAdmin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *contractorServiceClient) MakeReviewer(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*TxStatusResponse, error) {
+	out := new(TxStatusResponse)
+	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/MakeReviewer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *contractorServiceClient) GetStatus(ctx context.Context, in *TxStatusRequest, opts ...grpc.CallOption) (*TxStatusResponse, error) {
 	out := new(TxStatusResponse)
 	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/GetStatus", in, out, opts...)
@@ -78,6 +108,9 @@ func (c *contractorServiceClient) Faucet(ctx context.Context, in *FaucetRequest,
 type ContractorServiceServer interface {
 	PublishWork(context.Context, *PublishWorkRequest) (*TxHashResponse, error)
 	PurchaseWork(context.Context, *PurchaseWorkRequest) (*PurchaseWorkResponse, error)
+	MakeAuthor(context.Context, *AccountRequest) (*TxStatusResponse, error)
+	MakeAdmin(context.Context, *AccountRequest) (*TxStatusResponse, error)
+	MakeReviewer(context.Context, *AccountRequest) (*TxStatusResponse, error)
 	GetStatus(context.Context, *TxStatusRequest) (*TxStatusResponse, error)
 	Faucet(context.Context, *FaucetRequest) (*TxHashResponse, error)
 	mustEmbedUnimplementedContractorServiceServer()
@@ -92,6 +125,15 @@ func (UnimplementedContractorServiceServer) PublishWork(context.Context, *Publis
 }
 func (UnimplementedContractorServiceServer) PurchaseWork(context.Context, *PurchaseWorkRequest) (*PurchaseWorkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PurchaseWork not implemented")
+}
+func (UnimplementedContractorServiceServer) MakeAuthor(context.Context, *AccountRequest) (*TxStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MakeAuthor not implemented")
+}
+func (UnimplementedContractorServiceServer) MakeAdmin(context.Context, *AccountRequest) (*TxStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MakeAdmin not implemented")
+}
+func (UnimplementedContractorServiceServer) MakeReviewer(context.Context, *AccountRequest) (*TxStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MakeReviewer not implemented")
 }
 func (UnimplementedContractorServiceServer) GetStatus(context.Context, *TxStatusRequest) (*TxStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
@@ -148,6 +190,60 @@ func _ContractorService_PurchaseWork_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ContractorService_MakeAuthor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContractorServiceServer).MakeAuthor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pp.contractor.ContractorService/MakeAuthor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContractorServiceServer).MakeAuthor(ctx, req.(*AccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ContractorService_MakeAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContractorServiceServer).MakeAdmin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pp.contractor.ContractorService/MakeAdmin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContractorServiceServer).MakeAdmin(ctx, req.(*AccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ContractorService_MakeReviewer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContractorServiceServer).MakeReviewer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pp.contractor.ContractorService/MakeReviewer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContractorServiceServer).MakeReviewer(ctx, req.(*AccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ContractorService_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TxStatusRequest)
 	if err := dec(in); err != nil {
@@ -200,6 +296,18 @@ var ContractorService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ContractorService_PurchaseWork_Handler,
 		},
 		{
+			MethodName: "MakeAuthor",
+			Handler:    _ContractorService_MakeAuthor_Handler,
+		},
+		{
+			MethodName: "MakeAdmin",
+			Handler:    _ContractorService_MakeAdmin_Handler,
+		},
+		{
+			MethodName: "MakeReviewer",
+			Handler:    _ContractorService_MakeReviewer_Handler,
+		},
+		{
 			MethodName: "GetStatus",
 			Handler:    _ContractorService_GetStatus_Handler,
 		},
@@ -209,5 +317,5 @@ var ContractorService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "contractor.proto",
+	Metadata: "contractor-srv/contractor.proto",
 }

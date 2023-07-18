@@ -20,6 +20,12 @@ service ContractorService {
 
   rpc PurchaseWork (PurchaseWorkRequest) returns(PurchaseWorkResponse);
 
+  rpc MakeAuthor (AccountRequest) returns(TxStatusResponse);
+
+  rpc MakeAdmin (AccountRequest) returns(TxStatusResponse);
+
+  rpc MakeReviewer (AccountRequest) returns(TxStatusResponse);
+
   // rpc FollowTxStatus(TxStatusRequest) returns (stream TxStatusResponce) {}
 
   rpc GetStatus(TxStatusRequest) returns (TxStatusResponse);
@@ -65,4 +71,8 @@ message TxStatusResponse {
 message FaucetRequest {
   string address = 1; // 0 - Failed, 1 - Success
   string amount = 2;
+}
+
+message AccountRequest {
+  string address = 1;
 }
