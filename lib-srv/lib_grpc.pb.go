@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LibraryServiceClient interface {
-	PutWork(ctx context.Context, in *PutWorkRequest, opts ...grpc.CallOption) (*Null, error)
+	MakeAsPurchased(ctx context.Context, in *MakeAsPurchasedRequest, opts ...grpc.CallOption) (*Null, error)
 }
 
 type libraryServiceClient struct {
@@ -33,9 +33,9 @@ func NewLibraryServiceClient(cc grpc.ClientConnInterface) LibraryServiceClient {
 	return &libraryServiceClient{cc}
 }
 
-func (c *libraryServiceClient) PutWork(ctx context.Context, in *PutWorkRequest, opts ...grpc.CallOption) (*Null, error) {
+func (c *libraryServiceClient) MakeAsPurchased(ctx context.Context, in *MakeAsPurchasedRequest, opts ...grpc.CallOption) (*Null, error) {
 	out := new(Null)
-	err := c.cc.Invoke(ctx, "/pp.contractor.LibraryService/PutWork", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pp.contractor.LibraryService/MakeAsPurchased", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *libraryServiceClient) PutWork(ctx context.Context, in *PutWorkRequest, 
 // All implementations must embed UnimplementedLibraryServiceServer
 // for forward compatibility
 type LibraryServiceServer interface {
-	PutWork(context.Context, *PutWorkRequest) (*Null, error)
+	MakeAsPurchased(context.Context, *MakeAsPurchasedRequest) (*Null, error)
 	mustEmbedUnimplementedLibraryServiceServer()
 }
 
@@ -54,8 +54,8 @@ type LibraryServiceServer interface {
 type UnimplementedLibraryServiceServer struct {
 }
 
-func (UnimplementedLibraryServiceServer) PutWork(context.Context, *PutWorkRequest) (*Null, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PutWork not implemented")
+func (UnimplementedLibraryServiceServer) MakeAsPurchased(context.Context, *MakeAsPurchasedRequest) (*Null, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MakeAsPurchased not implemented")
 }
 func (UnimplementedLibraryServiceServer) mustEmbedUnimplementedLibraryServiceServer() {}
 
@@ -70,20 +70,20 @@ func RegisterLibraryServiceServer(s grpc.ServiceRegistrar, srv LibraryServiceSer
 	s.RegisterService(&LibraryService_ServiceDesc, srv)
 }
 
-func _LibraryService_PutWork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PutWorkRequest)
+func _LibraryService_MakeAsPurchased_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MakeAsPurchasedRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LibraryServiceServer).PutWork(ctx, in)
+		return srv.(LibraryServiceServer).MakeAsPurchased(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pp.contractor.LibraryService/PutWork",
+		FullMethod: "/pp.contractor.LibraryService/MakeAsPurchased",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LibraryServiceServer).PutWork(ctx, req.(*PutWorkRequest))
+		return srv.(LibraryServiceServer).MakeAsPurchased(ctx, req.(*MakeAsPurchasedRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -96,8 +96,8 @@ var LibraryService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*LibraryServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "PutWork",
-			Handler:    _LibraryService_PutWork_Handler,
+			MethodName: "MakeAsPurchased",
+			Handler:    _LibraryService_MakeAsPurchased_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

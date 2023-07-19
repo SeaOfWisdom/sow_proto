@@ -16,11 +16,11 @@ option go_package = "./;proto";
  **/
 
 service LibraryService {
-    rpc PutWork (PutWorkRequest) returns(Null);
+    rpc MakeAsPurchased (MakeAsPurchasedRequest) returns(Null);
 }
 
 
-message PutWorkRequest {
+message MakeAsPurchasedRequest {
     string reader_address = 1;
     string work_id = 2;
 }
