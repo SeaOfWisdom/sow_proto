@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package pp.contractor;
+
+option go_package = "./;proto";
+
+
+/**
+ *        ____  ____   ____
+ *   __ _|  _ \|  _ \ / ___|
+ *  / _` | |_) | |_) | |
+ * | (_| |  _ <|  __/| |___
+ *  \__, |_| \_\_|    \____|
+ *  |___/
+ *
+ **/
+
+service LibraryService {
+    rpc MakeAsPurchased (MakeAsPurchasedRequest) returns(Null);
+}
+
+
+message MakeAsPurchasedRequest {
+    string reader_address = 1;
+    string work_id = 2;
+}
+
+message Null {}
+
+
+
