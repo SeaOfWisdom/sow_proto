@@ -16,7 +16,7 @@ option go_package = "./;proto";
  **/
 
 service ContractorService {
-  rpc PublishWork (PublishWorkRequest) returns(TxHashResponse);
+  rpc PublishWork (PublishWorkRequest) returns(PublishWorkResponse);
 
   rpc PurchaseWork (PurchaseWorkRequest) returns(PurchaseWorkResponse);
 
@@ -48,6 +48,11 @@ message PublishWorkRequest {
   string price = 5;
 }
 
+message PublishWorkResponse {
+  string tx_hash = 1;
+  string address = 2;
+}
+
 message PurchaseWorkRequest {
   string work_id = 1;
   string reader_address = 2;
@@ -67,7 +72,7 @@ message TxHashResponse {
 
 message TxStatusRequest {
   string tx_hash = 1;
-  string chain_id = 2;
+  int64 chain_id = 2;
 }
 
 message TxStatusResponse {
@@ -94,4 +99,10 @@ message PaperByIdResponse {
 
 message RoleResponse {
   uint64 role =1;
+}
+
+message AddReviewRequest {
+  string work_id = 1;
+  string reviewer_address = 2;
+  string decision = 3;
 }
