@@ -8,11 +8,21 @@ import "google/protobuf/timestamp.proto";
 service OCR {
   rpc ExtractText (ExtractTextRequest) returns (ExtractTextResponse) {}
   rpc ExtractValidatorText(ExtractValidatorRequest) returns (ExtractValidatorResponse) {}
+  rpc ExtractLanguage(LanguageRequest) returns (LanguageResponse);
 }
 
 message ExtractTextRequest {
   bytes image = 1;
   bool isPaper = 2;
+}
+
+message LanguageRequest {
+  string text = 1;
+}
+
+message LanguageResponse {
+  string lang = 1;
+  string code = 2;
 }
 
 message ExtractValidatorRequest {
@@ -21,8 +31,8 @@ message ExtractValidatorRequest {
 }
 
 message ExtractValidatorResponse {
-    ValidatorForwardInfo forward_info = 1;
-    ValidatorBackwardInfo backward_info = 2;
+  ValidatorForwardInfo forward_info = 1;
+  ValidatorBackwardInfo backward_info = 2;
 }
 
 message ValidatorBackwardInfo {
