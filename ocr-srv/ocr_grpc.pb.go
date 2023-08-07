@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type OCRClient interface {
 	ExtractText(ctx context.Context, in *ExtractTextRequest, opts ...grpc.CallOption) (*ExtractTextResponse, error)
 	ExtractValidatorText(ctx context.Context, in *ExtractValidatorRequest, opts ...grpc.CallOption) (*ExtractValidatorResponse, error)
+	ExtractLanguage(ctx context.Context, in *LanguageRequest, opts ...grpc.CallOption) (*LanguageResponse, error)
 }
 
 type oCRClient struct {
@@ -52,12 +53,22 @@ func (c *oCRClient) ExtractValidatorText(ctx context.Context, in *ExtractValidat
 	return out, nil
 }
 
+func (c *oCRClient) ExtractLanguage(ctx context.Context, in *LanguageRequest, opts ...grpc.CallOption) (*LanguageResponse, error) {
+	out := new(LanguageResponse)
+	err := c.cc.Invoke(ctx, "/ocr.OCR/ExtractLanguage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OCRServer is the server API for OCR service.
 // All implementations must embed UnimplementedOCRServer
 // for forward compatibility
 type OCRServer interface {
 	ExtractText(context.Context, *ExtractTextRequest) (*ExtractTextResponse, error)
 	ExtractValidatorText(context.Context, *ExtractValidatorRequest) (*ExtractValidatorResponse, error)
+	ExtractLanguage(context.Context, *LanguageRequest) (*LanguageResponse, error)
 	mustEmbedUnimplementedOCRServer()
 }
 
@@ -70,6 +81,9 @@ func (UnimplementedOCRServer) ExtractText(context.Context, *ExtractTextRequest) 
 }
 func (UnimplementedOCRServer) ExtractValidatorText(context.Context, *ExtractValidatorRequest) (*ExtractValidatorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExtractValidatorText not implemented")
+}
+func (UnimplementedOCRServer) ExtractLanguage(context.Context, *LanguageRequest) (*LanguageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExtractLanguage not implemented")
 }
 func (UnimplementedOCRServer) mustEmbedUnimplementedOCRServer() {}
 
@@ -120,6 +134,24 @@ func _OCR_ExtractValidatorText_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OCR_ExtractLanguage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LanguageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OCRServer).ExtractLanguage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ocr.OCR/ExtractLanguage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OCRServer).ExtractLanguage(ctx, req.(*LanguageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OCR_ServiceDesc is the grpc.ServiceDesc for OCR service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +166,10 @@ var OCR_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ExtractValidatorText",
 			Handler:    _OCR_ExtractValidatorText_Handler,
+		},
+		{
+			MethodName: "ExtractLanguage",
+			Handler:    _OCR_ExtractLanguage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
