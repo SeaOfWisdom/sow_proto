@@ -37,6 +37,8 @@ service ContractorService {
   rpc GetPaperById(PaperByIdRequest) returns (PaperByIdResponse);
 
   rpc GetParticipantRole(AccountRequest) returns (RoleResponse);
+
+  rpc AddReviewsForPaper(AddReviewsRequest) returns (TxHashResponse);
 }
 
 
@@ -98,11 +100,10 @@ message PaperByIdResponse {
 }
 
 message RoleResponse {
-  uint64 role =1;
+  uint64 role = 1;
 }
 
-message AddReviewRequest {
+message AddReviewsRequest {
   string work_id = 1;
-  string reviewer_address = 2;
-  string decision = 3;
+  map<string, bool> review_results = 2;
 }
