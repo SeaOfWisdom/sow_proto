@@ -32,7 +32,7 @@ type ContractorServiceClient interface {
 	GetStatus(ctx context.Context, in *TxStatusRequest, opts ...grpc.CallOption) (*TxStatusResponse, error)
 	GetPaperById(ctx context.Context, in *PaperByIdRequest, opts ...grpc.CallOption) (*PaperByIdResponse, error)
 	GetParticipantRole(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*RoleResponse, error)
-	AddReviewsForPaper(ctx context.Context, in *AddReviewsRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
+	AddReviewsBatch(ctx context.Context, in *AddReviewsRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
 }
 
 type contractorServiceClient struct {
@@ -133,9 +133,9 @@ func (c *contractorServiceClient) GetParticipantRole(ctx context.Context, in *Ac
 	return out, nil
 }
 
-func (c *contractorServiceClient) AddReviewsForPaper(ctx context.Context, in *AddReviewsRequest, opts ...grpc.CallOption) (*TxHashResponse, error) {
+func (c *contractorServiceClient) AddReviewsBatch(ctx context.Context, in *AddReviewsRequest, opts ...grpc.CallOption) (*TxHashResponse, error) {
 	out := new(TxHashResponse)
-	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/AddReviewsForPaper", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/AddReviewsBatch", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ type ContractorServiceServer interface {
 	GetStatus(context.Context, *TxStatusRequest) (*TxStatusResponse, error)
 	GetPaperById(context.Context, *PaperByIdRequest) (*PaperByIdResponse, error)
 	GetParticipantRole(context.Context, *AccountRequest) (*RoleResponse, error)
-	AddReviewsForPaper(context.Context, *AddReviewsRequest) (*TxHashResponse, error)
+	AddReviewsBatch(context.Context, *AddReviewsRequest) (*TxHashResponse, error)
 	mustEmbedUnimplementedContractorServiceServer()
 }
 
@@ -194,8 +194,8 @@ func (UnimplementedContractorServiceServer) GetPaperById(context.Context, *Paper
 func (UnimplementedContractorServiceServer) GetParticipantRole(context.Context, *AccountRequest) (*RoleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetParticipantRole not implemented")
 }
-func (UnimplementedContractorServiceServer) AddReviewsForPaper(context.Context, *AddReviewsRequest) (*TxHashResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddReviewsForPaper not implemented")
+func (UnimplementedContractorServiceServer) AddReviewsBatch(context.Context, *AddReviewsRequest) (*TxHashResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddReviewsBatch not implemented")
 }
 func (UnimplementedContractorServiceServer) mustEmbedUnimplementedContractorServiceServer() {}
 
@@ -390,20 +390,20 @@ func _ContractorService_GetParticipantRole_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ContractorService_AddReviewsForPaper_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ContractorService_AddReviewsBatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddReviewsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ContractorServiceServer).AddReviewsForPaper(ctx, in)
+		return srv.(ContractorServiceServer).AddReviewsBatch(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pp.contractor.ContractorService/AddReviewsForPaper",
+		FullMethod: "/pp.contractor.ContractorService/AddReviewsBatch",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ContractorServiceServer).AddReviewsForPaper(ctx, req.(*AddReviewsRequest))
+		return srv.(ContractorServiceServer).AddReviewsBatch(ctx, req.(*AddReviewsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -456,8 +456,8 @@ var ContractorService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ContractorService_GetParticipantRole_Handler,
 		},
 		{
-			MethodName: "AddReviewsForPaper",
-			Handler:    _ContractorService_AddReviewsForPaper_Handler,
+			MethodName: "AddReviewsBatch",
+			Handler:    _ContractorService_AddReviewsBatch_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -38,7 +38,7 @@ service ContractorService {
 
   rpc GetParticipantRole(AccountRequest) returns (RoleResponse);
 
-  rpc AddReviewsForPaper(AddReviewsRequest) returns (TxHashResponse);
+  rpc AddReviewsBatch(AddReviewsRequest) returns (TxHashResponse);
 }
 
 
