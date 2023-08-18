@@ -16,7 +16,7 @@ option go_package = "./;proto";
  **/
 
 service EducationVerifierService{
-  rpc Verify(VerifyRequest)  returns (VerifyResponse);
+  rpc Verify(VerifyRequest) returns (VerifyResponse);
 }
 
 message VerifyRequest{
