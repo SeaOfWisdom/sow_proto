@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package pp.contractor;
+
+option go_package = "./;proto";
+
+
+/**
+ *        ____  ____   ____
+ *   __ _|  _ \|  _ \ / ___|
+ *  / _` | |_) | |_) | |
+ * | (_| |  _ <|  __/| |___
+ *  \__, |_| \_\_|    \____|
+ *  |___/
+ *
+ **/
+
+service PdfService{
+  rpc MakeScientificPaper(ScientificPaperRequest) returns (ScientificPaperResponse);
+}
+
+message ScientificPaperRequest{
+  string introduction = 1;
+  string goal_methods_design = 2;
+  string result_discussion = 3;
+  string conclusion = 4;
+  string literature = 5;
+  repeated bytes images = 6;
+}
+
+message ScientificPaperResponse{
+  bytes pdf = 1;
+}
