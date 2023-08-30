@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PdfServiceClient interface {
 	MakeScientificPaper(ctx context.Context, in *ScientificPaperRequest, opts ...grpc.CallOption) (*ScientificPaperResponse, error)
+	MakeScientificPaperLatex(ctx context.Context, in *ScientificPaperRequest, opts ...grpc.CallOption) (*ScientificPaperResponse, error)
 }
 
 type pdfServiceClient struct {
@@ -42,11 +43,21 @@ func (c *pdfServiceClient) MakeScientificPaper(ctx context.Context, in *Scientif
 	return out, nil
 }
 
+func (c *pdfServiceClient) MakeScientificPaperLatex(ctx context.Context, in *ScientificPaperRequest, opts ...grpc.CallOption) (*ScientificPaperResponse, error) {
+	out := new(ScientificPaperResponse)
+	err := c.cc.Invoke(ctx, "/pp.contractor.PdfService/MakeScientificPaperLatex", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PdfServiceServer is the server API for PdfService service.
 // All implementations must embed UnimplementedPdfServiceServer
 // for forward compatibility
 type PdfServiceServer interface {
 	MakeScientificPaper(context.Context, *ScientificPaperRequest) (*ScientificPaperResponse, error)
+	MakeScientificPaperLatex(context.Context, *ScientificPaperRequest) (*ScientificPaperResponse, error)
 	mustEmbedUnimplementedPdfServiceServer()
 }
 
@@ -56,6 +67,9 @@ type UnimplementedPdfServiceServer struct {
 
 func (UnimplementedPdfServiceServer) MakeScientificPaper(context.Context, *ScientificPaperRequest) (*ScientificPaperResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MakeScientificPaper not implemented")
+}
+func (UnimplementedPdfServiceServer) MakeScientificPaperLatex(context.Context, *ScientificPaperRequest) (*ScientificPaperResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MakeScientificPaperLatex not implemented")
 }
 func (UnimplementedPdfServiceServer) mustEmbedUnimplementedPdfServiceServer() {}
 
@@ -88,6 +102,24 @@ func _PdfService_MakeScientificPaper_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PdfService_MakeScientificPaperLatex_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ScientificPaperRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PdfServiceServer).MakeScientificPaperLatex(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pp.contractor.PdfService/MakeScientificPaperLatex",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PdfServiceServer).MakeScientificPaperLatex(ctx, req.(*ScientificPaperRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PdfService_ServiceDesc is the grpc.ServiceDesc for PdfService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +130,10 @@ var PdfService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "MakeScientificPaper",
 			Handler:    _PdfService_MakeScientificPaper_Handler,
+		},
+		{
+			MethodName: "MakeScientificPaperLatex",
+			Handler:    _PdfService_MakeScientificPaperLatex_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
