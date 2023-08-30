@@ -17,6 +17,7 @@ option go_package = "./;proto";
 
 service PdfService{
   rpc MakeScientificPaper(ScientificPaperRequest) returns (ScientificPaperResponse);
+  rpc MakeScientificPaperLatex(ScientificPaperRequest) returns (ScientificPaperResponse);
 }
 
 message ScientificPaperRequest{
