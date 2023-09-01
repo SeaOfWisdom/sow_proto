@@ -42,7 +42,7 @@ service ContractorService {
 
   rpc IsPaperReadableFor(IsPaperReadableRequest) returns (BooleanResponse);
 
-  rpc PaperExpiresFor(PaperExpiresForResponse) returns(PaperExpiresForResponse);
+  rpc PaperExpiresFor(PaperExpiresForRequest) returns(PaperExpiresForResponse);
 }
 
 
@@ -121,7 +121,7 @@ message BooleanResponse {
   bool result = 1;
 }
 
-message PaperExpiresFor{
+message PaperExpiresForRequest{
   string work_id = 1;
   string reader_address = 2;
 }

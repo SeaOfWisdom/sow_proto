@@ -34,7 +34,7 @@ type ContractorServiceClient interface {
 	GetParticipantRole(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*RoleResponse, error)
 	AddReviewsBatch(ctx context.Context, in *AddReviewsRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
 	IsPaperReadableFor(ctx context.Context, in *IsPaperReadableRequest, opts ...grpc.CallOption) (*BooleanResponse, error)
-	PaperExpiresFor(ctx context.Context, in *PaperExpiresForResponse, opts ...grpc.CallOption) (*PaperExpiresForResponse, error)
+	PaperExpiresFor(ctx context.Context, in *PaperExpiresForRequest, opts ...grpc.CallOption) (*PaperExpiresForResponse, error)
 }
 
 type contractorServiceClient struct {
@@ -153,7 +153,7 @@ func (c *contractorServiceClient) IsPaperReadableFor(ctx context.Context, in *Is
 	return out, nil
 }
 
-func (c *contractorServiceClient) PaperExpiresFor(ctx context.Context, in *PaperExpiresForResponse, opts ...grpc.CallOption) (*PaperExpiresForResponse, error) {
+func (c *contractorServiceClient) PaperExpiresFor(ctx context.Context, in *PaperExpiresForRequest, opts ...grpc.CallOption) (*PaperExpiresForResponse, error) {
 	out := new(PaperExpiresForResponse)
 	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/PaperExpiresFor", in, out, opts...)
 	if err != nil {
@@ -178,7 +178,7 @@ type ContractorServiceServer interface {
 	GetParticipantRole(context.Context, *AccountRequest) (*RoleResponse, error)
 	AddReviewsBatch(context.Context, *AddReviewsRequest) (*TxHashResponse, error)
 	IsPaperReadableFor(context.Context, *IsPaperReadableRequest) (*BooleanResponse, error)
-	PaperExpiresFor(context.Context, *PaperExpiresForResponse) (*PaperExpiresForResponse, error)
+	PaperExpiresFor(context.Context, *PaperExpiresForRequest) (*PaperExpiresForResponse, error)
 	mustEmbedUnimplementedContractorServiceServer()
 }
 
@@ -222,7 +222,7 @@ func (UnimplementedContractorServiceServer) AddReviewsBatch(context.Context, *Ad
 func (UnimplementedContractorServiceServer) IsPaperReadableFor(context.Context, *IsPaperReadableRequest) (*BooleanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsPaperReadableFor not implemented")
 }
-func (UnimplementedContractorServiceServer) PaperExpiresFor(context.Context, *PaperExpiresForResponse) (*PaperExpiresForResponse, error) {
+func (UnimplementedContractorServiceServer) PaperExpiresFor(context.Context, *PaperExpiresForRequest) (*PaperExpiresForResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PaperExpiresFor not implemented")
 }
 func (UnimplementedContractorServiceServer) mustEmbedUnimplementedContractorServiceServer() {}
@@ -455,7 +455,7 @@ func _ContractorService_IsPaperReadableFor_Handler(srv interface{}, ctx context.
 }
 
 func _ContractorService_PaperExpiresFor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PaperExpiresForResponse)
+	in := new(PaperExpiresForRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -467,7 +467,7 @@ func _ContractorService_PaperExpiresFor_Handler(srv interface{}, ctx context.Con
 		FullMethod: "/pp.contractor.ContractorService/PaperExpiresFor",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ContractorServiceServer).PaperExpiresFor(ctx, req.(*PaperExpiresForResponse))
+		return srv.(ContractorServiceServer).PaperExpiresFor(ctx, req.(*PaperExpiresForRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
