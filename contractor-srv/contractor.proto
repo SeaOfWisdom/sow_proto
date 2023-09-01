@@ -39,6 +39,8 @@ service ContractorService {
   rpc GetParticipantRole(AccountRequest) returns (RoleResponse);
 
   rpc AddReviewsBatch(AddReviewsRequest) returns (TxHashResponse);
+
+  rpc IsPaperReadableFor(IsPaperReadableRequest) returns (BooleanResponse);
 }
 
 
@@ -106,4 +108,13 @@ message RoleResponse {
 message AddReviewsRequest {
   string work_id = 1;
   map<string, bool> review_results = 2;
+}
+
+message IsPaperReadableRequest{
+  string work_id = 1;
+  string reader_address = 2;
+}
+
+message BooleanResponse {
+  bool result = 1;
 }

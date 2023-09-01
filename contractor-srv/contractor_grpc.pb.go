@@ -33,6 +33,7 @@ type ContractorServiceClient interface {
 	GetPaperById(ctx context.Context, in *PaperByIdRequest, opts ...grpc.CallOption) (*PaperByIdResponse, error)
 	GetParticipantRole(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*RoleResponse, error)
 	AddReviewsBatch(ctx context.Context, in *AddReviewsRequest, opts ...grpc.CallOption) (*TxHashResponse, error)
+	IsPaperReadableFor(ctx context.Context, in *IsPaperReadableRequest, opts ...grpc.CallOption) (*BooleanResponse, error)
 }
 
 type contractorServiceClient struct {
@@ -142,6 +143,15 @@ func (c *contractorServiceClient) AddReviewsBatch(ctx context.Context, in *AddRe
 	return out, nil
 }
 
+func (c *contractorServiceClient) IsPaperReadableFor(ctx context.Context, in *IsPaperReadableRequest, opts ...grpc.CallOption) (*BooleanResponse, error) {
+	out := new(BooleanResponse)
+	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/IsPaperReadableFor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ContractorServiceServer is the server API for ContractorService service.
 // All implementations must embed UnimplementedContractorServiceServer
 // for forward compatibility
@@ -157,6 +167,7 @@ type ContractorServiceServer interface {
 	GetPaperById(context.Context, *PaperByIdRequest) (*PaperByIdResponse, error)
 	GetParticipantRole(context.Context, *AccountRequest) (*RoleResponse, error)
 	AddReviewsBatch(context.Context, *AddReviewsRequest) (*TxHashResponse, error)
+	IsPaperReadableFor(context.Context, *IsPaperReadableRequest) (*BooleanResponse, error)
 	mustEmbedUnimplementedContractorServiceServer()
 }
 
@@ -196,6 +207,9 @@ func (UnimplementedContractorServiceServer) GetParticipantRole(context.Context, 
 }
 func (UnimplementedContractorServiceServer) AddReviewsBatch(context.Context, *AddReviewsRequest) (*TxHashResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddReviewsBatch not implemented")
+}
+func (UnimplementedContractorServiceServer) IsPaperReadableFor(context.Context, *IsPaperReadableRequest) (*BooleanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsPaperReadableFor not implemented")
 }
 func (UnimplementedContractorServiceServer) mustEmbedUnimplementedContractorServiceServer() {}
 
@@ -408,6 +422,24 @@ func _ContractorService_AddReviewsBatch_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ContractorService_IsPaperReadableFor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsPaperReadableRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContractorServiceServer).IsPaperReadableFor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pp.contractor.ContractorService/IsPaperReadableFor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContractorServiceServer).IsPaperReadableFor(ctx, req.(*IsPaperReadableRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ContractorService_ServiceDesc is the grpc.ServiceDesc for ContractorService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -458,6 +490,10 @@ var ContractorService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddReviewsBatch",
 			Handler:    _ContractorService_AddReviewsBatch_Handler,
+		},
+		{
+			MethodName: "IsPaperReadableFor",
+			Handler:    _ContractorService_IsPaperReadableFor_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
