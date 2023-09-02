@@ -41,6 +41,8 @@ service ContractorService {
   rpc AddReviewsBatch(AddReviewsRequest) returns (TxHashResponse);
 
   rpc IsPaperReadableFor(IsPaperReadableRequest) returns (BooleanResponse);
+
+  rpc PaperExpiresFor(PaperExpiresForRequest) returns(PaperExpiresForResponse);
 }
 
 
@@ -117,4 +119,13 @@ message IsPaperReadableRequest{
 
 message BooleanResponse {
   bool result = 1;
+}
+
+message PaperExpiresForRequest{
+  string work_id = 1;
+  string reader_address = 2;
+}
+
+message PaperExpiresForResponse{
+  uint64 expiration = 1;
 }
