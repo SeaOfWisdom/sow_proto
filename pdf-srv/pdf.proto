@@ -27,6 +27,16 @@ message ScientificPaperRequest{
   string conclusion = 4;
   string literature = 5;
   repeated bytes images = 6;
+  repeated Table tables = 7;
+}
+
+message Table {
+  repeated string headers = 1;
+  repeated StringArray columns = 2;
+}
+
+message StringArray{
+  repeated string values = 1;
 }
 
 message ScientificPaperResponse{
