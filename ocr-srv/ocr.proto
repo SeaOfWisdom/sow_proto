@@ -23,6 +23,7 @@ message LanguageRequest {
 message LanguageResponse {
   string lang = 1;
   string code = 2;
+  string error = 3;
 }
 
 message ExtractValidatorRequest {
