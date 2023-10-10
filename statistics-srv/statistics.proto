@@ -27,28 +27,28 @@ message SearchRequest{
 }
 
 message Statistics {
-  int32 total_views = 1;
-  int32 total_posts = 2;
-  int32 total_citations = 3;
-  float total_earnings = 4;
-  float earnings_last_month = 5;
-  float earnings_last_week = 6;
+  double total_earnings = 1;
+  double earnings_period = 2;
+  double earnings_last_month = 3;
+  double earnings_last_week = 4;
 
-  repeated Transaction transactions = 7;
+  repeated Transaction transactions = 5;
 }
 
 message Transaction{
   string hash = 1;
-  int32  block_number = 2;
+  uint64  block_number = 2;
   LogType type = 3;
   string from = 4;
   string to = 5;
   optional string work_id = 6;
-  float amount = 7;
+  double amount = 7;
+  google.protobuf.Timestamp timestamp = 8;
 }
 
 enum LogType {
   UNKNOWN = 0;
   PURCHASED_WORK = 1;
   CLAIM_REWARDS = 2;
+  TRANSFER = 3;
 }
