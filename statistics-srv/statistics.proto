@@ -66,5 +66,4 @@ enum LogType {
   UNKNOWN = 0;
   PURCHASED_WORK = 1;
   CLAIM_REWARDS = 2;
-  TRANSFER = 3;
 }
