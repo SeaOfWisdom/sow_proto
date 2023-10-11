@@ -8,8 +8,6 @@ func StringToLogType(val string) LogType {
 		out = LogType_PURCHASED_WORK
 	case "ReviewerRewardsClaimed":
 		out = LogType_CLAIM_REWARDS
-	case "Transfer":
-		out = LogType_TRANSFER
 	}
 
 	return out
