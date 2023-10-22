@@ -25,6 +25,7 @@ const _ = grpc.SupportPackageIsVersion7
 type StatisticServiceClient interface {
 	GetStatistics(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Statistics, error)
 	StoreBatchTransaction(ctx context.Context, in *TransactionLogs, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetPurchasedWork(ctx context.Context, in *WorkIDsList, opts ...grpc.CallOption) (*GetPurchasedWorkResponse, error)
 }
 
 type statisticServiceClient struct {
@@ -53,12 +54,22 @@ func (c *statisticServiceClient) StoreBatchTransaction(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *statisticServiceClient) GetPurchasedWork(ctx context.Context, in *WorkIDsList, opts ...grpc.CallOption) (*GetPurchasedWorkResponse, error) {
+	out := new(GetPurchasedWorkResponse)
+	err := c.cc.Invoke(ctx, "/pp.contractor.StatisticService/GetPurchasedWork", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StatisticServiceServer is the server API for StatisticService service.
 // All implementations must embed UnimplementedStatisticServiceServer
 // for forward compatibility
 type StatisticServiceServer interface {
 	GetStatistics(context.Context, *SearchRequest) (*Statistics, error)
 	StoreBatchTransaction(context.Context, *TransactionLogs) (*emptypb.Empty, error)
+	GetPurchasedWork(context.Context, *WorkIDsList) (*GetPurchasedWorkResponse, error)
 	mustEmbedUnimplementedStatisticServiceServer()
 }
 
@@ -71,6 +82,9 @@ func (UnimplementedStatisticServiceServer) GetStatistics(context.Context, *Searc
 }
 func (UnimplementedStatisticServiceServer) StoreBatchTransaction(context.Context, *TransactionLogs) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StoreBatchTransaction not implemented")
+}
+func (UnimplementedStatisticServiceServer) GetPurchasedWork(context.Context, *WorkIDsList) (*GetPurchasedWorkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPurchasedWork not implemented")
 }
 func (UnimplementedStatisticServiceServer) mustEmbedUnimplementedStatisticServiceServer() {}
 
@@ -121,6 +135,24 @@ func _StatisticService_StoreBatchTransaction_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StatisticService_GetPurchasedWork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WorkIDsList)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StatisticServiceServer).GetPurchasedWork(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pp.contractor.StatisticService/GetPurchasedWork",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StatisticServiceServer).GetPurchasedWork(ctx, req.(*WorkIDsList))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StatisticService_ServiceDesc is the grpc.ServiceDesc for StatisticService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -135,6 +167,10 @@ var StatisticService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StoreBatchTransaction",
 			Handler:    _StatisticService_StoreBatchTransaction_Handler,
+		},
+		{
+			MethodName: "GetPurchasedWork",
+			Handler:    _StatisticService_GetPurchasedWork_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

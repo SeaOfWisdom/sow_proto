@@ -4,6 +4,7 @@ package pp.contractor;
 
 option go_package = "./;proto";
 
+import "google/protobuf/timestamp.proto";
 
 /**
  *        ____  ____   ____
@@ -16,13 +17,24 @@ option go_package = "./;proto";
  **/
 
 service LibraryService {
-    rpc MakeAsPurchased (MakeAsPurchasedRequest) returns(Null);
+  rpc MakeAsPurchased (MakeAsPurchasedRequest) returns(Null);
+  rpc SearchSubmittedReviews(SearchWorkReviews) returns(SearchReviewsResponse);
 }
 
 
 message MakeAsPurchasedRequest {
-    string reader_address = 1;
-    string work_id = 2;
+  string reader_address = 1;
+  string work_id = 2;
+}
+
+message SearchWorkReviews{
+  string address = 1;
+  google.protobuf.Timestamp since = 2;
+  google.protobuf.Timestamp until = 3;
+}
+
+message SearchReviewsResponse{
+  map<string, google.protobuf.Timestamp> workReviews = 1;
 }
 
 message Null {}
