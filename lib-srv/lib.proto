@@ -18,7 +18,7 @@ import "google/protobuf/timestamp.proto";
 
 service LibraryService {
   rpc MakeAsPurchased (MakeAsPurchasedRequest) returns(Null);
-  rpc SearchSubmittedReviews(SearchWorkReviews) returns(SearchReviewsResponse);
+  rpc SearchSubmittedReviews(SearchWorkReviewsRequest) returns(SearchReviewsResponse);
 }
 
 
@@ -27,7 +27,7 @@ message MakeAsPurchasedRequest {
   string work_id = 2;
 }
 
-message SearchWorkReviews{
+message SearchWorkReviewsRequest{
   string address = 1;
   google.protobuf.Timestamp since = 2;
   google.protobuf.Timestamp until = 3;

@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LibraryServiceClient interface {
 	MakeAsPurchased(ctx context.Context, in *MakeAsPurchasedRequest, opts ...grpc.CallOption) (*Null, error)
-	SearchSubmittedReviews(ctx context.Context, in *SearchWorkReviews, opts ...grpc.CallOption) (*SearchReviewsResponse, error)
+	SearchSubmittedReviews(ctx context.Context, in *SearchWorkReviewsRequest, opts ...grpc.CallOption) (*SearchReviewsResponse, error)
 }
 
 type libraryServiceClient struct {
@@ -43,7 +43,7 @@ func (c *libraryServiceClient) MakeAsPurchased(ctx context.Context, in *MakeAsPu
 	return out, nil
 }
 
-func (c *libraryServiceClient) SearchSubmittedReviews(ctx context.Context, in *SearchWorkReviews, opts ...grpc.CallOption) (*SearchReviewsResponse, error) {
+func (c *libraryServiceClient) SearchSubmittedReviews(ctx context.Context, in *SearchWorkReviewsRequest, opts ...grpc.CallOption) (*SearchReviewsResponse, error) {
 	out := new(SearchReviewsResponse)
 	err := c.cc.Invoke(ctx, "/pp.contractor.LibraryService/SearchSubmittedReviews", in, out, opts...)
 	if err != nil {
@@ -57,7 +57,7 @@ func (c *libraryServiceClient) SearchSubmittedReviews(ctx context.Context, in *S
 // for forward compatibility
 type LibraryServiceServer interface {
 	MakeAsPurchased(context.Context, *MakeAsPurchasedRequest) (*Null, error)
-	SearchSubmittedReviews(context.Context, *SearchWorkReviews) (*SearchReviewsResponse, error)
+	SearchSubmittedReviews(context.Context, *SearchWorkReviewsRequest) (*SearchReviewsResponse, error)
 	mustEmbedUnimplementedLibraryServiceServer()
 }
 
@@ -68,7 +68,7 @@ type UnimplementedLibraryServiceServer struct {
 func (UnimplementedLibraryServiceServer) MakeAsPurchased(context.Context, *MakeAsPurchasedRequest) (*Null, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MakeAsPurchased not implemented")
 }
-func (UnimplementedLibraryServiceServer) SearchSubmittedReviews(context.Context, *SearchWorkReviews) (*SearchReviewsResponse, error) {
+func (UnimplementedLibraryServiceServer) SearchSubmittedReviews(context.Context, *SearchWorkReviewsRequest) (*SearchReviewsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchSubmittedReviews not implemented")
 }
 func (UnimplementedLibraryServiceServer) mustEmbedUnimplementedLibraryServiceServer() {}
@@ -103,7 +103,7 @@ func _LibraryService_MakeAsPurchased_Handler(srv interface{}, ctx context.Contex
 }
 
 func _LibraryService_SearchSubmittedReviews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchWorkReviews)
+	in := new(SearchWorkReviewsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -115,7 +115,7 @@ func _LibraryService_SearchSubmittedReviews_Handler(srv interface{}, ctx context
 		FullMethod: "/pp.contractor.LibraryService/SearchSubmittedReviews",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LibraryServiceServer).SearchSubmittedReviews(ctx, req.(*SearchWorkReviews))
+		return srv.(LibraryServiceServer).SearchSubmittedReviews(ctx, req.(*SearchWorkReviewsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
