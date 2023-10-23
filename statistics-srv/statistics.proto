@@ -20,12 +20,14 @@ import "google/protobuf/empty.proto";
 service StatisticService{
   rpc GetStatistics(SearchRequest) returns (Statistics);
   rpc StoreBatchTransaction(TransactionLogs) returns (google.protobuf.Empty);
+  rpc GetPurchasedWork(WorkIDsList) returns (GetPurchasedWorkResponse);
 }
 
 message SearchRequest{
   string address = 1;
   google.protobuf.Timestamp since = 2;
   google.protobuf.Timestamp until = 3;
+  LogType log_type = 4;
 }
 
 message Statistics {
@@ -60,6 +62,21 @@ message TransactionLog{
 
 message TransactionLogs{
   repeated TransactionLog logs = 1;
+}
+
+message WorkIDsList{
+  repeated string workIDs = 1;
+  google.protobuf.Timestamp since = 2;
+  google.protobuf.Timestamp until = 3;
+}
+
+message PurchasedWorkStatistics {
+  google.protobuf.Timestamp timestamp = 1;
+  string txHash = 2;
+}
+
+message GetPurchasedWorkResponse {
+  map<string, float> purchases = 1;
 }
 
 enum LogType {
