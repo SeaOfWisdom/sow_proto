@@ -31,10 +31,6 @@ message SearchRequest{
 }
 
 message Statistics {
-  double total_earnings = 1;
-  double earnings_period = 2;
-  double earnings_last_month = 3;
-  double earnings_last_week = 4;
   repeated Transaction transactions = 5;
 }
 
