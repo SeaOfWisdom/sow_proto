@@ -4,6 +4,8 @@ package pp.contractor;
 
 option go_package = "./;proto";
 
+import "google/protobuf/empty.proto";
+
 
 /**
  *        ____  ____   ____
@@ -43,6 +45,8 @@ service ContractorService {
   rpc IsPaperReadableFor(IsPaperReadableRequest) returns (BooleanResponse);
 
   rpc PaperExpiresFor(PaperExpiresForRequest) returns(PaperExpiresForResponse);
+
+  rpc CheckNewParticipantAddress(AccountRequest) returns(google.protobuf.Empty);
 }
 
 
