@@ -37,6 +37,7 @@ type ContractorServiceClient interface {
 	IsPaperReadableFor(ctx context.Context, in *IsPaperReadableRequest, opts ...grpc.CallOption) (*BooleanResponse, error)
 	PaperExpiresFor(ctx context.Context, in *PaperExpiresForRequest, opts ...grpc.CallOption) (*PaperExpiresForResponse, error)
 	CheckNewParticipantAddress(ctx context.Context, in *AccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	VerifySignature(ctx context.Context, in *VerifySignatureRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type contractorServiceClient struct {
@@ -173,6 +174,15 @@ func (c *contractorServiceClient) CheckNewParticipantAddress(ctx context.Context
 	return out, nil
 }
 
+func (c *contractorServiceClient) VerifySignature(ctx context.Context, in *VerifySignatureRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/pp.contractor.ContractorService/VerifySignature", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ContractorServiceServer is the server API for ContractorService service.
 // All implementations must embed UnimplementedContractorServiceServer
 // for forward compatibility
@@ -191,6 +201,7 @@ type ContractorServiceServer interface {
 	IsPaperReadableFor(context.Context, *IsPaperReadableRequest) (*BooleanResponse, error)
 	PaperExpiresFor(context.Context, *PaperExpiresForRequest) (*PaperExpiresForResponse, error)
 	CheckNewParticipantAddress(context.Context, *AccountRequest) (*emptypb.Empty, error)
+	VerifySignature(context.Context, *VerifySignatureRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedContractorServiceServer()
 }
 
@@ -239,6 +250,9 @@ func (UnimplementedContractorServiceServer) PaperExpiresFor(context.Context, *Pa
 }
 func (UnimplementedContractorServiceServer) CheckNewParticipantAddress(context.Context, *AccountRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckNewParticipantAddress not implemented")
+}
+func (UnimplementedContractorServiceServer) VerifySignature(context.Context, *VerifySignatureRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VerifySignature not implemented")
 }
 func (UnimplementedContractorServiceServer) mustEmbedUnimplementedContractorServiceServer() {}
 
@@ -505,6 +519,24 @@ func _ContractorService_CheckNewParticipantAddress_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ContractorService_VerifySignature_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifySignatureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContractorServiceServer).VerifySignature(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pp.contractor.ContractorService/VerifySignature",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContractorServiceServer).VerifySignature(ctx, req.(*VerifySignatureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ContractorService_ServiceDesc is the grpc.ServiceDesc for ContractorService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -567,6 +599,10 @@ var ContractorService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckNewParticipantAddress",
 			Handler:    _ContractorService_CheckNewParticipantAddress_Handler,
+		},
+		{
+			MethodName: "VerifySignature",
+			Handler:    _ContractorService_VerifySignature_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

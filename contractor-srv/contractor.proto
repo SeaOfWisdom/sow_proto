@@ -47,6 +47,8 @@ service ContractorService {
   rpc PaperExpiresFor(PaperExpiresForRequest) returns(PaperExpiresForResponse);
 
   rpc CheckNewParticipantAddress(AccountRequest) returns(google.protobuf.Empty);
+
+  rpc VerifySignature(VerifySignatureRequest) returns(google.protobuf.Empty);
 }
 
 
@@ -132,4 +134,9 @@ message PaperExpiresForRequest{
 
 message PaperExpiresForResponse{
   uint64 expiration = 1;
+}
+
+message VerifySignatureRequest{
+  string address = 1;
+  string message = 2;
 }
