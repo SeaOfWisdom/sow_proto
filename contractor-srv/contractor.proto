@@ -139,4 +139,5 @@ message PaperExpiresForResponse{
 message VerifySignatureRequest{
   string address = 1;
   string message = 2;
+  string signature = 3;
 }
