@@ -1,6 +1,6 @@
 package proto
 
-func (l *LanguageResponse) IsValid() (out bool) {
+func (l *DetectLanguageResponse) IsValid() (out bool) {
 	out = l.Code != "" && l.Lang != ""
 	out = out && l.Code != "none" && l.Lang != "nonsense"
 

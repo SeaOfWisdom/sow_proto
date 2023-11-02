@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package pp.gpt;
+
+option go_package = "./;proto";
+
+import "google/protobuf/timestamp.proto";
+
+/**
+ *        ____  ____   ____
+ *   __ _|  _ \|  _ \ / ___|
+ *  / _` | |_) | |_) | |
+ * | (_| |  _ <|  __/| |___
+ *  \__, |_| \_\_|    \____|
+ *  |___/
+ *
+ **/
+
+service GptService {
+  rpc DetectLanguage (TextRequest) returns(DetectLanguageResponse);
+  rpc ExtractSection(TextRequest) returns(ExtractSectionResponse);
+  rpc ExtractDiploma(ExtractDiplomaRequest) returns(ExtractDiplomaResponse);
+  rpc FilterKeyWords(RepeatedTextRequest) returns(FilterKeyWordsResponse);
+}
+
+message TextRequest {
+  string text = 1;
+}
+
+message RepeatedTextRequest {
+  repeated string text = 1;
+}
+
+message DetectLanguageResponse {
+  string lang = 1;
+  string code = 2;
+  string error = 3;
+}
+
+message ExtractSectionResponse {
+  string title = 1;
+  repeated string authors = 2;
+  string abstract = 3;
+  repeated string keywords = 4;
+  map<string, string> main = 5;
+}
+
+message ExtractDiplomaRequest{
+  string front_text = 1;
+  string back_text = 2;
+}
+
+message ExtractDiplomaResponse {
+  DiplomaFrontResponse front = 1;
+  DiplomaBackResponse back = 2;
+}
+
+message DiplomaFrontResponse{
+  int64 issue_id = 1;
+  google.protobuf.Timestamp issue_date = 2;
+  string last_name = 3;
+  string first_name = 4;
+  string middle_name = 5;
+}
+
+message DiplomaBackResponse{
+  string issue_id = 1;
+  google.protobuf.Timestamp issue_date = 2;
+  string number = 3;
+  string series = 4;
+}
+
+message FilterKeyWordsResponse{
+  repeated string key_words = 1;
+}
+
+
+
