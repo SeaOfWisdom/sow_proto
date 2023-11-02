@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package pp.contractor;
+package pp.gpt;
 
 option go_package = "./;proto";
 

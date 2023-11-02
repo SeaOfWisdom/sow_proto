@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	EducationVerifierService_Verify_FullMethodName = "/pp.contractor.EducationVerifierService/Verify"
+	EducationVerifierService_Verify_FullMethodName = "/pp.education.EducationVerifierService/Verify"
 )
 
 // EducationVerifierServiceClient is the client API for EducationVerifierService service.
@@ -97,7 +97,7 @@ func _EducationVerifierService_Verify_Handler(srv interface{}, ctx context.Conte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var EducationVerifierService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pp.contractor.EducationVerifierService",
+	ServiceName: "pp.education.EducationVerifierService",
 	HandlerType: (*EducationVerifierServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

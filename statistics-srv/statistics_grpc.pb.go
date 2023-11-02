@@ -20,9 +20,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	StatisticService_GetStatistics_FullMethodName         = "/pp.contractor.StatisticService/GetStatistics"
-	StatisticService_StoreBatchTransaction_FullMethodName = "/pp.contractor.StatisticService/StoreBatchTransaction"
-	StatisticService_GetPurchasedWork_FullMethodName      = "/pp.contractor.StatisticService/GetPurchasedWork"
+	StatisticService_GetStatistics_FullMethodName         = "/pp.statistics.StatisticService/GetStatistics"
+	StatisticService_StoreBatchTransaction_FullMethodName = "/pp.statistics.StatisticService/StoreBatchTransaction"
+	StatisticService_GetPurchasedWork_FullMethodName      = "/pp.statistics.StatisticService/GetPurchasedWork"
 )
 
 // StatisticServiceClient is the client API for StatisticService service.
@@ -163,7 +163,7 @@ func _StatisticService_GetPurchasedWork_Handler(srv interface{}, ctx context.Con
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var StatisticService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pp.contractor.StatisticService",
+	ServiceName: "pp.statistics.StatisticService",
 	HandlerType: (*StatisticServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

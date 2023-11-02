@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PdfService_MakeScientificPaper_FullMethodName      = "/pp.contractor.PdfService/MakeScientificPaper"
-	PdfService_MakeScientificPaperLatex_FullMethodName = "/pp.contractor.PdfService/MakeScientificPaperLatex"
+	PdfService_MakeScientificPaper_FullMethodName      = "/pp.pdf.PdfService/MakeScientificPaper"
+	PdfService_MakeScientificPaperLatex_FullMethodName = "/pp.pdf.PdfService/MakeScientificPaperLatex"
 )
 
 // PdfServiceClient is the client API for PdfService service.
@@ -129,7 +129,7 @@ func _PdfService_MakeScientificPaperLatex_Handler(srv interface{}, ctx context.C
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PdfService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pp.contractor.PdfService",
+	ServiceName: "pp.pdf.PdfService",
 	HandlerType: (*PdfServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

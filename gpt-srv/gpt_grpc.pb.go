@@ -19,10 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	GptService_DetectLanguage_FullMethodName = "/pp.contractor.GptService/DetectLanguage"
-	GptService_ExtractSection_FullMethodName = "/pp.contractor.GptService/ExtractSection"
-	GptService_ExtractDiploma_FullMethodName = "/pp.contractor.GptService/ExtractDiploma"
-	GptService_FilterKeyWords_FullMethodName = "/pp.contractor.GptService/FilterKeyWords"
+	GptService_DetectLanguage_FullMethodName = "/pp.gpt.GptService/DetectLanguage"
+	GptService_ExtractSection_FullMethodName = "/pp.gpt.GptService/ExtractSection"
+	GptService_ExtractDiploma_FullMethodName = "/pp.gpt.GptService/ExtractDiploma"
+	GptService_FilterKeyWords_FullMethodName = "/pp.gpt.GptService/FilterKeyWords"
 )
 
 // GptServiceClient is the client API for GptService service.
@@ -195,7 +195,7 @@ func _GptService_FilterKeyWords_Handler(srv interface{}, ctx context.Context, de
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var GptService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pp.contractor.GptService",
+	ServiceName: "pp.gpt.GptService",
 	HandlerType: (*GptServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
