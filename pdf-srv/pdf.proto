@@ -50,6 +50,7 @@ message Table {
 
 message ScientificPaperResponse{
   bytes pdf = 1;
+  int64 pages = 2;
 }
 
 message AuthorInfo {
