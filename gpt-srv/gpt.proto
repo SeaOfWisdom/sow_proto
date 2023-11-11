@@ -46,28 +46,17 @@ message ExtractSectionResponse {
 }
 
 message ExtractDiplomaRequest{
-  string front_text = 1;
-  string back_text = 2;
+  string back_text = 1;
 }
 
 message ExtractDiplomaResponse {
-  DiplomaFrontResponse front = 1;
-  DiplomaBackResponse back = 2;
+  DiplomaBackResponse back = 1;
 }
 
-message DiplomaFrontResponse{
-  int64 issue_id = 1;
-  google.protobuf.Timestamp issue_date = 2;
-  string last_name = 3;
-  string first_name = 4;
-  string middle_name = 5;
-}
 
 message DiplomaBackResponse{
-  string issue_id = 1;
-  google.protobuf.Timestamp issue_date = 2;
-  string number = 3;
-  string series = 4;
+  string series = 1;
+  string number = 2;
 }
 
 message FilterKeyWordsResponse{
