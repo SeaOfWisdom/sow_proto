@@ -24,7 +24,7 @@ message ExtractValidatorResponse {
 
 message ValidatorBackSideInfo {
   string series = 1;
-  string numbers = 2;
+  string number = 2;
 }
 
 
