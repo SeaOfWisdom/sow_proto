@@ -57,6 +57,7 @@ message ExtractDiplomaResponse {
 message DiplomaBackResponse{
   string series = 1;
   string number = 2;
+  google.protobuf.Timestamp date = 3;
 }
 
 message FilterKeyWordsResponse{

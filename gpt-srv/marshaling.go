@@ -1,8 +1,6 @@
 package proto
 
-import (
-	"encoding/json"
-)
+import "encoding/json"
 
 func (d *DiplomaBackResponse) UnmarshalJSON(data []byte) error {
 	type Alias DiplomaBackResponse
