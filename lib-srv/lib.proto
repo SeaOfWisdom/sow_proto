@@ -19,8 +19,13 @@ import "google/protobuf/timestamp.proto";
 service LibraryService {
   rpc MakeAsPurchased (MakeAsPurchasedRequest) returns(Null);
   rpc SearchSubmittedReviews(SearchWorkReviewsRequest) returns(SearchReviewsResponse);
+  rpc MakeValidatorModeration(ValidatorModeration) returns (Null);
 }
 
+message ValidatorModeration{
+  string validator_id = 1;
+  bool is_success = 2;
+}
 
 message MakeAsPurchasedRequest {
   string reader_address = 1;

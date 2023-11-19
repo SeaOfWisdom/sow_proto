@@ -37,7 +37,7 @@ const (
 	ContractorService_VerifySignature_FullMethodName            = "/pp.contractor.ContractorService/VerifySignature"
 )
 
-// ContractorServiceClient is the client API for ContractorService service.
+// ContractorServiceClient is the client API for ContractorService services.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ContractorServiceClient interface {
@@ -201,7 +201,7 @@ func (c *contractorServiceClient) VerifySignature(ctx context.Context, in *Verif
 	return out, nil
 }
 
-// ContractorServiceServer is the server API for ContractorService service.
+// ContractorServiceServer is the server API for ContractorService services.
 // All implementations must embed UnimplementedContractorServiceServer
 // for forward compatibility
 type ContractorServiceServer interface {
@@ -274,7 +274,7 @@ func (UnimplementedContractorServiceServer) VerifySignature(context.Context, *Ve
 }
 func (UnimplementedContractorServiceServer) mustEmbedUnimplementedContractorServiceServer() {}
 
-// UnsafeContractorServiceServer may be embedded to opt out of forward compatibility for this service.
+// UnsafeContractorServiceServer may be embedded to opt out of forward compatibility for this services.
 // Use of this interface is not recommended, as added methods to ContractorServiceServer will
 // result in compilation errors.
 type UnsafeContractorServiceServer interface {
@@ -555,7 +555,7 @@ func _ContractorService_VerifySignature_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-// ContractorService_ServiceDesc is the grpc.ServiceDesc for ContractorService service.
+// ContractorService_ServiceDesc is the grpc.ServiceDesc for ContractorService services.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ContractorService_ServiceDesc = grpc.ServiceDesc{

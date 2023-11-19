@@ -25,7 +25,7 @@ const (
 	StatisticService_GetPurchasedWork_FullMethodName      = "/pp.statistics.StatisticService/GetPurchasedWork"
 )
 
-// StatisticServiceClient is the client API for StatisticService service.
+// StatisticServiceClient is the client API for StatisticService services.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StatisticServiceClient interface {
@@ -69,7 +69,7 @@ func (c *statisticServiceClient) GetPurchasedWork(ctx context.Context, in *WorkI
 	return out, nil
 }
 
-// StatisticServiceServer is the server API for StatisticService service.
+// StatisticServiceServer is the server API for StatisticService services.
 // All implementations must embed UnimplementedStatisticServiceServer
 // for forward compatibility
 type StatisticServiceServer interface {
@@ -94,7 +94,7 @@ func (UnimplementedStatisticServiceServer) GetPurchasedWork(context.Context, *Wo
 }
 func (UnimplementedStatisticServiceServer) mustEmbedUnimplementedStatisticServiceServer() {}
 
-// UnsafeStatisticServiceServer may be embedded to opt out of forward compatibility for this service.
+// UnsafeStatisticServiceServer may be embedded to opt out of forward compatibility for this services.
 // Use of this interface is not recommended, as added methods to StatisticServiceServer will
 // result in compilation errors.
 type UnsafeStatisticServiceServer interface {
@@ -159,7 +159,7 @@ func _StatisticService_GetPurchasedWork_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-// StatisticService_ServiceDesc is the grpc.ServiceDesc for StatisticService service.
+// StatisticService_ServiceDesc is the grpc.ServiceDesc for StatisticService services.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var StatisticService_ServiceDesc = grpc.ServiceDesc{

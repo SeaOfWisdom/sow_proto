@@ -18,7 +18,7 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// GptServiceClient is the client API for GptService service.
+// GptServiceClient is the client API for GptService services.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GptServiceClient interface {
@@ -72,7 +72,7 @@ func (c *gptServiceClient) FilterKeyWords(ctx context.Context, in *RepeatedTextR
 	return out, nil
 }
 
-// GptServiceServer is the server API for GptService service.
+// GptServiceServer is the server API for GptService services.
 // All implementations must embed UnimplementedGptServiceServer
 // for forward compatibility
 type GptServiceServer interface {
@@ -101,7 +101,7 @@ func (UnimplementedGptServiceServer) FilterKeyWords(context.Context, *RepeatedTe
 }
 func (UnimplementedGptServiceServer) mustEmbedUnimplementedGptServiceServer() {}
 
-// UnsafeGptServiceServer may be embedded to opt out of forward compatibility for this service.
+// UnsafeGptServiceServer may be embedded to opt out of forward compatibility for this services.
 // Use of this interface is not recommended, as added methods to GptServiceServer will
 // result in compilation errors.
 type UnsafeGptServiceServer interface {
@@ -184,7 +184,7 @@ func _GptService_FilterKeyWords_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-// GptService_ServiceDesc is the grpc.ServiceDesc for GptService service.
+// GptService_ServiceDesc is the grpc.ServiceDesc for GptService services.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var GptService_ServiceDesc = grpc.ServiceDesc{

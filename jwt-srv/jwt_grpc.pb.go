@@ -23,7 +23,7 @@ const (
 	JwtService_DecodeJWT_FullMethodName   = "/pp.jwt.JwtService/DecodeJWT"
 )
 
-// JwtServiceClient is the client API for JwtService service.
+// JwtServiceClient is the client API for JwtService services.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type JwtServiceClient interface {
@@ -57,7 +57,7 @@ func (c *jwtServiceClient) DecodeJWT(ctx context.Context, in *Token, opts ...grp
 	return out, nil
 }
 
-// JwtServiceServer is the server API for JwtService service.
+// JwtServiceServer is the server API for JwtService services.
 // All implementations must embed UnimplementedJwtServiceServer
 // for forward compatibility
 type JwtServiceServer interface {
@@ -78,7 +78,7 @@ func (UnimplementedJwtServiceServer) DecodeJWT(context.Context, *Token) (*Decode
 }
 func (UnimplementedJwtServiceServer) mustEmbedUnimplementedJwtServiceServer() {}
 
-// UnsafeJwtServiceServer may be embedded to opt out of forward compatibility for this service.
+// UnsafeJwtServiceServer may be embedded to opt out of forward compatibility for this services.
 // Use of this interface is not recommended, as added methods to JwtServiceServer will
 // result in compilation errors.
 type UnsafeJwtServiceServer interface {
@@ -125,7 +125,7 @@ func _JwtService_DecodeJWT_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-// JwtService_ServiceDesc is the grpc.ServiceDesc for JwtService service.
+// JwtService_ServiceDesc is the grpc.ServiceDesc for JwtService services.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var JwtService_ServiceDesc = grpc.ServiceDesc{

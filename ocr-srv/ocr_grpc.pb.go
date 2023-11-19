@@ -18,7 +18,7 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// OCRClient is the client API for OCR service.
+// OCRClient is the client API for OCR services.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OCRClient interface {
@@ -52,7 +52,7 @@ func (c *oCRClient) ExtractValidatorText(ctx context.Context, in *ExtractValidat
 	return out, nil
 }
 
-// OCRServer is the server API for OCR service.
+// OCRServer is the server API for OCR services.
 // All implementations must embed UnimplementedOCRServer
 // for forward compatibility
 type OCRServer interface {
@@ -73,7 +73,7 @@ func (UnimplementedOCRServer) ExtractValidatorText(context.Context, *ExtractVali
 }
 func (UnimplementedOCRServer) mustEmbedUnimplementedOCRServer() {}
 
-// UnsafeOCRServer may be embedded to opt out of forward compatibility for this service.
+// UnsafeOCRServer may be embedded to opt out of forward compatibility for this services.
 // Use of this interface is not recommended, as added methods to OCRServer will
 // result in compilation errors.
 type UnsafeOCRServer interface {
@@ -120,7 +120,7 @@ func _OCR_ExtractValidatorText_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-// OCR_ServiceDesc is the grpc.ServiceDesc for OCR service.
+// OCR_ServiceDesc is the grpc.ServiceDesc for OCR services.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var OCR_ServiceDesc = grpc.ServiceDesc{
