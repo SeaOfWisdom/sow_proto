@@ -23,7 +23,7 @@ const (
 	PdfService_MakeScientificPaperLatex_FullMethodName = "/pp.pdf.PdfService/MakeScientificPaperLatex"
 )
 
-// PdfServiceClient is the client API for PdfService services.
+// PdfServiceClient is the client API for PdfService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PdfServiceClient interface {
@@ -57,7 +57,7 @@ func (c *pdfServiceClient) MakeScientificPaperLatex(ctx context.Context, in *Sci
 	return out, nil
 }
 
-// PdfServiceServer is the server API for PdfService services.
+// PdfServiceServer is the server API for PdfService service.
 // All implementations must embed UnimplementedPdfServiceServer
 // for forward compatibility
 type PdfServiceServer interface {
@@ -78,7 +78,7 @@ func (UnimplementedPdfServiceServer) MakeScientificPaperLatex(context.Context, *
 }
 func (UnimplementedPdfServiceServer) mustEmbedUnimplementedPdfServiceServer() {}
 
-// UnsafePdfServiceServer may be embedded to opt out of forward compatibility for this services.
+// UnsafePdfServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to PdfServiceServer will
 // result in compilation errors.
 type UnsafePdfServiceServer interface {
@@ -125,7 +125,7 @@ func _PdfService_MakeScientificPaperLatex_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
-// PdfService_ServiceDesc is the grpc.ServiceDesc for PdfService services.
+// PdfService_ServiceDesc is the grpc.ServiceDesc for PdfService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PdfService_ServiceDesc = grpc.ServiceDesc{

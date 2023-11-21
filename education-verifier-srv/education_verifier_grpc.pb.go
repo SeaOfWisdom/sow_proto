@@ -22,7 +22,7 @@ const (
 	EducationVerifierService_Verify_FullMethodName = "/pp.education.EducationVerifierService/Verify"
 )
 
-// EducationVerifierServiceClient is the client API for EducationVerifierService services.
+// EducationVerifierServiceClient is the client API for EducationVerifierService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EducationVerifierServiceClient interface {
@@ -46,7 +46,7 @@ func (c *educationVerifierServiceClient) Verify(ctx context.Context, in *VerifyR
 	return out, nil
 }
 
-// EducationVerifierServiceServer is the server API for EducationVerifierService services.
+// EducationVerifierServiceServer is the server API for EducationVerifierService service.
 // All implementations must embed UnimplementedEducationVerifierServiceServer
 // for forward compatibility
 type EducationVerifierServiceServer interface {
@@ -64,7 +64,7 @@ func (UnimplementedEducationVerifierServiceServer) Verify(context.Context, *Veri
 func (UnimplementedEducationVerifierServiceServer) mustEmbedUnimplementedEducationVerifierServiceServer() {
 }
 
-// UnsafeEducationVerifierServiceServer may be embedded to opt out of forward compatibility for this services.
+// UnsafeEducationVerifierServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to EducationVerifierServiceServer will
 // result in compilation errors.
 type UnsafeEducationVerifierServiceServer interface {
@@ -93,7 +93,7 @@ func _EducationVerifierService_Verify_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-// EducationVerifierService_ServiceDesc is the grpc.ServiceDesc for EducationVerifierService services.
+// EducationVerifierService_ServiceDesc is the grpc.ServiceDesc for EducationVerifierService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var EducationVerifierService_ServiceDesc = grpc.ServiceDesc{
