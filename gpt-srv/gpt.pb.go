@@ -453,6 +453,53 @@ func (x *FilterKeyWordsResponse) GetKeyWords() []string {
 	return nil
 }
 
+type ReformattedReferenceResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	References string `protobuf:"bytes,1,opt,name=references,proto3" json:"references,omitempty"`
+}
+
+func (x *ReformattedReferenceResponse) Reset() {
+	*x = ReformattedReferenceResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_gpt_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ReformattedReferenceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReformattedReferenceResponse) ProtoMessage() {}
+
+func (x *ReformattedReferenceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gpt_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReformattedReferenceResponse.ProtoReflect.Descriptor instead.
+func (*ReformattedReferenceResponse) Descriptor() ([]byte, []int) {
+	return file_gpt_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ReformattedReferenceResponse) GetReferences() string {
+	if x != nil {
+		return x.References
+	}
+	return ""
+}
+
 var File_gpt_proto protoreflect.FileDescriptor
 
 var file_gpt_proto_rawDesc = []byte{
@@ -501,7 +548,11 @@ var file_gpt_proto_rawDesc = []byte{
 	0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x4b, 0x65, 0x79, 0x57, 0x6f, 0x72, 0x64, 0x73, 0x52, 0x65,
 	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6b, 0x65, 0x79, 0x5f, 0x77, 0x6f,
 	0x72, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x6b, 0x65, 0x79, 0x57, 0x6f,
-	0x72, 0x64, 0x73, 0x32, 0xba, 0x02, 0x0a, 0x0a, 0x47, 0x70, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69,
+	0x72, 0x64, 0x73, 0x22, 0x3e, 0x0a, 0x1c, 0x52, 0x65, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x74,
+	0x65, 0x64, 0x52, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65,
+	0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e,
+	0x63, 0x65, 0x73, 0x32, 0x89, 0x03, 0x0a, 0x0a, 0x47, 0x70, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69,
 	0x63, 0x65, 0x12, 0x45, 0x0a, 0x0e, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x4c, 0x61, 0x6e, 0x67,
 	0x75, 0x61, 0x67, 0x65, 0x12, 0x13, 0x2e, 0x70, 0x70, 0x2e, 0x67, 0x70, 0x74, 0x2e, 0x54, 0x65,
 	0x78, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1e, 0x2e, 0x70, 0x70, 0x2e, 0x67,
@@ -521,8 +572,13 @@ var file_gpt_proto_rawDesc = []byte{
 	0x65, 0x61, 0x74, 0x65, 0x64, 0x54, 0x65, 0x78, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x1a, 0x1e, 0x2e, 0x70, 0x70, 0x2e, 0x67, 0x70, 0x74, 0x2e, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72,
 	0x4b, 0x65, 0x79, 0x57, 0x6f, 0x72, 0x64, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x42, 0x0a, 0x5a, 0x08, 0x2e, 0x2f, 0x3b, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x12, 0x4d, 0x0a, 0x10, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x52, 0x65, 0x66, 0x65, 0x72, 0x65,
+	0x6e, 0x63, 0x65, 0x73, 0x12, 0x13, 0x2e, 0x70, 0x70, 0x2e, 0x67, 0x70, 0x74, 0x2e, 0x54, 0x65,
+	0x78, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x24, 0x2e, 0x70, 0x70, 0x2e, 0x67,
+	0x70, 0x74, 0x2e, 0x52, 0x65, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x74, 0x65, 0x64, 0x52, 0x65,
+	0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42,
+	0x0a, 0x5a, 0x08, 0x2e, 0x2f, 0x3b, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -537,31 +593,34 @@ func file_gpt_proto_rawDescGZIP() []byte {
 	return file_gpt_proto_rawDescData
 }
 
-var file_gpt_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_gpt_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_gpt_proto_goTypes = []interface{}{
-	(*TextRequest)(nil),            // 0: pp.gpt.TextRequest
-	(*RepeatedTextRequest)(nil),    // 1: pp.gpt.RepeatedTextRequest
-	(*DetectLanguageResponse)(nil), // 2: pp.gpt.DetectLanguageResponse
-	(*ExtractSectionResponse)(nil), // 3: pp.gpt.ExtractSectionResponse
-	(*ExtractDiplomaRequest)(nil),  // 4: pp.gpt.ExtractDiplomaRequest
-	(*ExtractDiplomaResponse)(nil), // 5: pp.gpt.ExtractDiplomaResponse
-	(*DiplomaBackResponse)(nil),    // 6: pp.gpt.DiplomaBackResponse
-	(*FilterKeyWordsResponse)(nil), // 7: pp.gpt.FilterKeyWordsResponse
-	nil,                            // 8: pp.gpt.ExtractSectionResponse.MainEntry
+	(*TextRequest)(nil),                  // 0: pp.gpt.TextRequest
+	(*RepeatedTextRequest)(nil),          // 1: pp.gpt.RepeatedTextRequest
+	(*DetectLanguageResponse)(nil),       // 2: pp.gpt.DetectLanguageResponse
+	(*ExtractSectionResponse)(nil),       // 3: pp.gpt.ExtractSectionResponse
+	(*ExtractDiplomaRequest)(nil),        // 4: pp.gpt.ExtractDiplomaRequest
+	(*ExtractDiplomaResponse)(nil),       // 5: pp.gpt.ExtractDiplomaResponse
+	(*DiplomaBackResponse)(nil),          // 6: pp.gpt.DiplomaBackResponse
+	(*FilterKeyWordsResponse)(nil),       // 7: pp.gpt.FilterKeyWordsResponse
+	(*ReformattedReferenceResponse)(nil), // 8: pp.gpt.ReformattedReferenceResponse
+	nil,                                  // 9: pp.gpt.ExtractSectionResponse.MainEntry
 }
 var file_gpt_proto_depIdxs = []int32{
-	8, // 0: pp.gpt.ExtractSectionResponse.main:type_name -> pp.gpt.ExtractSectionResponse.MainEntry
+	9, // 0: pp.gpt.ExtractSectionResponse.main:type_name -> pp.gpt.ExtractSectionResponse.MainEntry
 	6, // 1: pp.gpt.ExtractDiplomaResponse.back:type_name -> pp.gpt.DiplomaBackResponse
 	0, // 2: pp.gpt.GptService.DetectLanguage:input_type -> pp.gpt.TextRequest
 	0, // 3: pp.gpt.GptService.ExtractSection:input_type -> pp.gpt.TextRequest
 	4, // 4: pp.gpt.GptService.ExtractDiploma:input_type -> pp.gpt.ExtractDiplomaRequest
 	1, // 5: pp.gpt.GptService.FilterKeyWords:input_type -> pp.gpt.RepeatedTextRequest
-	2, // 6: pp.gpt.GptService.DetectLanguage:output_type -> pp.gpt.DetectLanguageResponse
-	3, // 7: pp.gpt.GptService.ExtractSection:output_type -> pp.gpt.ExtractSectionResponse
-	5, // 8: pp.gpt.GptService.ExtractDiploma:output_type -> pp.gpt.ExtractDiplomaResponse
-	7, // 9: pp.gpt.GptService.FilterKeyWords:output_type -> pp.gpt.FilterKeyWordsResponse
-	6, // [6:10] is the sub-list for method output_type
-	2, // [2:6] is the sub-list for method input_type
+	0, // 6: pp.gpt.GptService.FormatReferences:input_type -> pp.gpt.TextRequest
+	2, // 7: pp.gpt.GptService.DetectLanguage:output_type -> pp.gpt.DetectLanguageResponse
+	3, // 8: pp.gpt.GptService.ExtractSection:output_type -> pp.gpt.ExtractSectionResponse
+	5, // 9: pp.gpt.GptService.ExtractDiploma:output_type -> pp.gpt.ExtractDiplomaResponse
+	7, // 10: pp.gpt.GptService.FilterKeyWords:output_type -> pp.gpt.FilterKeyWordsResponse
+	8, // 11: pp.gpt.GptService.FormatReferences:output_type -> pp.gpt.ReformattedReferenceResponse
+	7, // [7:12] is the sub-list for method output_type
+	2, // [2:7] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
 	2, // [2:2] is the sub-list for extension extendee
 	0, // [0:2] is the sub-list for field type_name
@@ -669,6 +728,18 @@ func file_gpt_proto_init() {
 				return nil
 			}
 		}
+		file_gpt_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ReformattedReferenceResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -676,7 +747,7 @@ func file_gpt_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_gpt_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
