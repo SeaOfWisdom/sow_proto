@@ -21,6 +21,8 @@ service GptService {
   rpc ExtractSection(TextRequest) returns(ExtractSectionResponse);
   rpc ExtractDiploma(ExtractDiplomaRequest) returns(ExtractDiplomaResponse);
   rpc FilterKeyWords(RepeatedTextRequest) returns(FilterKeyWordsResponse);
+  rpc FormatReferences(TextRequest) returns(ReformattedReferenceResponse);
+
 }
 
 message TextRequest {
@@ -65,4 +67,6 @@ message FilterKeyWordsResponse{
 }
 
 
-
+message ReformattedReferenceResponse {
+  string references = 1;
+}

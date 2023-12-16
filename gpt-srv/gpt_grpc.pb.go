@@ -18,7 +18,15 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// GptServiceClient is the client API for GptService services.
+const (
+	GptService_DetectLanguage_FullMethodName   = "/pp.gpt.GptService/DetectLanguage"
+	GptService_ExtractSection_FullMethodName   = "/pp.gpt.GptService/ExtractSection"
+	GptService_ExtractDiploma_FullMethodName   = "/pp.gpt.GptService/ExtractDiploma"
+	GptService_FilterKeyWords_FullMethodName   = "/pp.gpt.GptService/FilterKeyWords"
+	GptService_FormatReferences_FullMethodName = "/pp.gpt.GptService/FormatReferences"
+)
+
+// GptServiceClient is the client API for GptService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GptServiceClient interface {
@@ -26,6 +34,7 @@ type GptServiceClient interface {
 	ExtractSection(ctx context.Context, in *TextRequest, opts ...grpc.CallOption) (*ExtractSectionResponse, error)
 	ExtractDiploma(ctx context.Context, in *ExtractDiplomaRequest, opts ...grpc.CallOption) (*ExtractDiplomaResponse, error)
 	FilterKeyWords(ctx context.Context, in *RepeatedTextRequest, opts ...grpc.CallOption) (*FilterKeyWordsResponse, error)
+	FormatReferences(ctx context.Context, in *TextRequest, opts ...grpc.CallOption) (*ReformattedReferenceResponse, error)
 }
 
 type gptServiceClient struct {
@@ -72,7 +81,16 @@ func (c *gptServiceClient) FilterKeyWords(ctx context.Context, in *RepeatedTextR
 	return out, nil
 }
 
-// GptServiceServer is the server API for GptService services.
+func (c *gptServiceClient) FormatReferences(ctx context.Context, in *TextRequest, opts ...grpc.CallOption) (*ReformattedReferenceResponse, error) {
+	out := new(ReformattedReferenceResponse)
+	err := c.cc.Invoke(ctx, GptService_FormatReferences_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// GptServiceServer is the server API for GptService service.
 // All implementations must embed UnimplementedGptServiceServer
 // for forward compatibility
 type GptServiceServer interface {
@@ -80,6 +98,7 @@ type GptServiceServer interface {
 	ExtractSection(context.Context, *TextRequest) (*ExtractSectionResponse, error)
 	ExtractDiploma(context.Context, *ExtractDiplomaRequest) (*ExtractDiplomaResponse, error)
 	FilterKeyWords(context.Context, *RepeatedTextRequest) (*FilterKeyWordsResponse, error)
+	FormatReferences(context.Context, *TextRequest) (*ReformattedReferenceResponse, error)
 	mustEmbedUnimplementedGptServiceServer()
 }
 
@@ -98,6 +117,9 @@ func (UnimplementedGptServiceServer) ExtractDiploma(context.Context, *ExtractDip
 }
 func (UnimplementedGptServiceServer) FilterKeyWords(context.Context, *RepeatedTextRequest) (*FilterKeyWordsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FilterKeyWords not implemented")
+}
+func (UnimplementedGptServiceServer) FormatReferences(context.Context, *TextRequest) (*ReformattedReferenceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FormatReferences not implemented")
 }
 func (UnimplementedGptServiceServer) mustEmbedUnimplementedGptServiceServer() {}
 
@@ -184,7 +206,25 @@ func _GptService_FilterKeyWords_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-// GptService_ServiceDesc is the grpc.ServiceDesc for GptService services.
+func _GptService_FormatReferences_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TextRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GptServiceServer).FormatReferences(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GptService_FormatReferences_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GptServiceServer).FormatReferences(ctx, req.(*TextRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// GptService_ServiceDesc is the grpc.ServiceDesc for GptService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var GptService_ServiceDesc = grpc.ServiceDesc{
@@ -206,6 +246,10 @@ var GptService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FilterKeyWords",
 			Handler:    _GptService_FilterKeyWords_Handler,
+		},
+		{
+			MethodName: "FormatReferences",
+			Handler:    _GptService_FormatReferences_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
