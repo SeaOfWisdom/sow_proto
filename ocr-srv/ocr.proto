@@ -3,6 +3,7 @@ syntax = "proto3";
 package ocr;
 option go_package = "./proto";
 
+import "google/protobuf/timestamp.proto";
 
 service OCR {
   rpc ExtractText (ExtractTextRequest) returns (ExtractTextResponse) {}
@@ -25,6 +26,7 @@ message ExtractValidatorResponse {
 message ValidatorBackSideInfo {
   string series = 1;
   string number = 2;
+  google.protobuf.Timestamp date = 3;
 }
 
 

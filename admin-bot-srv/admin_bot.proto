@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package pp.adminbot;
+
+option go_package = "./;proto";
+
+import "google/protobuf/empty.proto";
+
+/**
+ *        ____  ____   ____
+ *   __ _|  _ \|  _ \ / ___|
+ *  / _` | |_) | |_) | |
+ * | (_| |  _ <|  __/| |___
+ *  \__, |_| \_\_|    \____|
+ *  |___/
+ *
+ **/
+
+service AdminBotService {
+  rpc SendFile (SendValidatorDiploma) returns (google.protobuf.Empty);
+}
+
+
+message SendValidatorDiploma {
+  message Validator{
+    string id = 1;
+    string first_name = 2;
+    string last_name = 3;
+    string middle_name = 4;
+    string email = 5;
+    repeated string sciences = 6;
+    string web3_address = 7;
+  }
+
+  bytes file = 1;
+  string file_extension = 2;
+  Validator validator = 3;
+}
