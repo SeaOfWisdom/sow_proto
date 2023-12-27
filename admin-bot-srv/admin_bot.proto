@@ -23,21 +23,24 @@ service AdminBotService {
 
 
 message ValidatorDiplomaText {
-  message Validator{
-    string id = 1;
-    string first_name = 2;
-    string last_name = 3;
-    string middle_name = 4;
-    string email = 5;
-    repeated string sciences = 6;
-    string web3_address = 7;
-  }
-
   string diploma_series = 1;
   string diploma_number = 2;
   string country = 3;
   string diploma_date = 4;
+
+  Validator validator = 5;
 }
+
+message Validator{
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string middle_name = 4;
+  string email = 5;
+  repeated string sciences = 6;
+  string web3_address = 7;
+}
+
 
 message SendValidatorDiploma {
   message Validator{
