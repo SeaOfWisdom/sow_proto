@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.5
-// source: admin_bot.proto
+// source: admin-bot-srv/admin_bot.proto
 
 package proto
 
@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdminBotServiceClient interface {
 	SendFile(ctx context.Context, in *SendValidatorDiploma, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	SentText(ctx context.Context, in *ValidatorDiplomaText, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SendText(ctx context.Context, in *ValidatorDiplomaText, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type adminBotServiceClient struct {
@@ -44,9 +44,9 @@ func (c *adminBotServiceClient) SendFile(ctx context.Context, in *SendValidatorD
 	return out, nil
 }
 
-func (c *adminBotServiceClient) SentText(ctx context.Context, in *ValidatorDiplomaText, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *adminBotServiceClient) SendText(ctx context.Context, in *ValidatorDiplomaText, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/pp.adminbot.AdminBotService/SentText", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pp.adminbot.AdminBotService/SendText", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (c *adminBotServiceClient) SentText(ctx context.Context, in *ValidatorDiplo
 // for forward compatibility
 type AdminBotServiceServer interface {
 	SendFile(context.Context, *SendValidatorDiploma) (*emptypb.Empty, error)
-	SentText(context.Context, *ValidatorDiplomaText) (*emptypb.Empty, error)
+	SendText(context.Context, *ValidatorDiplomaText) (*emptypb.Empty, error)
 	mustEmbedUnimplementedAdminBotServiceServer()
 }
 
@@ -69,8 +69,8 @@ type UnimplementedAdminBotServiceServer struct {
 func (UnimplementedAdminBotServiceServer) SendFile(context.Context, *SendValidatorDiploma) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendFile not implemented")
 }
-func (UnimplementedAdminBotServiceServer) SentText(context.Context, *ValidatorDiplomaText) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SentText not implemented")
+func (UnimplementedAdminBotServiceServer) SendText(context.Context, *ValidatorDiplomaText) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendText not implemented")
 }
 func (UnimplementedAdminBotServiceServer) mustEmbedUnimplementedAdminBotServiceServer() {}
 
@@ -103,20 +103,20 @@ func _AdminBotService_SendFile_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminBotService_SentText_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AdminBotService_SendText_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ValidatorDiplomaText)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminBotServiceServer).SentText(ctx, in)
+		return srv.(AdminBotServiceServer).SendText(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pp.adminbot.AdminBotService/SentText",
+		FullMethod: "/pp.adminbot.AdminBotService/SendText",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminBotServiceServer).SentText(ctx, req.(*ValidatorDiplomaText))
+		return srv.(AdminBotServiceServer).SendText(ctx, req.(*ValidatorDiplomaText))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -133,10 +133,10 @@ var AdminBotService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AdminBotService_SendFile_Handler,
 		},
 		{
-			MethodName: "SentText",
-			Handler:    _AdminBotService_SentText_Handler,
+			MethodName: "SendText",
+			Handler:    _AdminBotService_SendText_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "admin_bot.proto",
+	Metadata: "admin-bot-srv/admin_bot.proto",
 }

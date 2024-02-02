@@ -18,7 +18,7 @@ import "google/protobuf/empty.proto";
 
 service AdminBotService {
   rpc SendFile (SendValidatorDiploma) returns (google.protobuf.Empty);
-  rpc SentText (ValidatorDiplomaText) returns (google.protobuf.Empty);
+  rpc SendText (ValidatorDiplomaText) returns (google.protobuf.Empty);
 }
 
 
