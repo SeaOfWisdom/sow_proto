@@ -70,3 +70,8 @@ message FilterKeyWordsResponse{
 message ReformattedReferenceResponse {
   string references = 1;
 }
+
+message ScientificCriteriaResponse {
+  string paper_text = 1;
+  string criteria   = 2;
+}
