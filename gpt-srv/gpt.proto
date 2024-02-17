@@ -71,7 +71,12 @@ message ReformattedReferenceResponse {
   string references = 1;
 }
 
-message ScientificCriteriaResponse {
+message ScientificCriteriaRequest {
   string paper_text = 1;
   string criteria   = 2;
+}
+
+
+message ScientificReviewResponse {
+  int64 review_score = 1;
 }
