@@ -78,5 +78,6 @@ message ScientificCriteriaRequest {
 
 
 message ScientificReviewResponse {
-  int64 review_score = 1;
+  int64 review_score   = 1;
+  string justification = 2;
 }
