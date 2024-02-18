@@ -73,7 +73,6 @@ message ReformattedReferenceResponse {
 
 message ScientificCriteriaRequest {
   string paper_text = 1;
-  string criteria   = 2;
 }
 
 
