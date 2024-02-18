@@ -84,4 +84,5 @@ message ScientificReviewResponse {
   int64  scientific_novelty      = 4;
   int64  literature_relevance    = 5;
   string detailed_conclusion     = 6;
+  string decision                = 7;
 }
