@@ -78,6 +78,10 @@ message ScientificCriteriaRequest {
 
 
 message ScientificReviewResponse {
-  int64 review_score   = 1;
-  string justification = 2;
+  int64  problem_relevance       = 1;
+  int64  article_quality         = 2;
+  int64  methods_appropriateness = 3;
+  int64  scientific_novelty      = 4;
+  int64  literature_relevance    = 5;
+  string detailed_conclusion     = 6;
 }
