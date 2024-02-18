@@ -24,6 +24,7 @@ const (
 	GptService_ExtractDiploma_FullMethodName   = "/pp.gpt.GptService/ExtractDiploma"
 	GptService_FilterKeyWords_FullMethodName   = "/pp.gpt.GptService/FilterKeyWords"
 	GptService_FormatReferences_FullMethodName = "/pp.gpt.GptService/FormatReferences"
+	GptService_ReviewPaper_FullMethodName      = "/pp.gpt.GptService/ReviewPaper"
 )
 
 // GptServiceClient is the client API for GptService service.
@@ -35,6 +36,7 @@ type GptServiceClient interface {
 	ExtractDiploma(ctx context.Context, in *ExtractDiplomaRequest, opts ...grpc.CallOption) (*ExtractDiplomaResponse, error)
 	FilterKeyWords(ctx context.Context, in *RepeatedTextRequest, opts ...grpc.CallOption) (*FilterKeyWordsResponse, error)
 	FormatReferences(ctx context.Context, in *TextRequest, opts ...grpc.CallOption) (*ReformattedReferenceResponse, error)
+	ReviewPaper(ctx context.Context, in *ScientificCriteriaRequest, opts ...grpc.CallOption) (*ScientificReviewResponse, error)
 }
 
 type gptServiceClient struct {
@@ -90,6 +92,15 @@ func (c *gptServiceClient) FormatReferences(ctx context.Context, in *TextRequest
 	return out, nil
 }
 
+func (c *gptServiceClient) ReviewPaper(ctx context.Context, in *ScientificCriteriaRequest, opts ...grpc.CallOption) (*ScientificReviewResponse, error) {
+	out := new(ScientificReviewResponse)
+	err := c.cc.Invoke(ctx, GptService_ReviewPaper_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GptServiceServer is the server API for GptService service.
 // All implementations must embed UnimplementedGptServiceServer
 // for forward compatibility
@@ -99,6 +110,7 @@ type GptServiceServer interface {
 	ExtractDiploma(context.Context, *ExtractDiplomaRequest) (*ExtractDiplomaResponse, error)
 	FilterKeyWords(context.Context, *RepeatedTextRequest) (*FilterKeyWordsResponse, error)
 	FormatReferences(context.Context, *TextRequest) (*ReformattedReferenceResponse, error)
+	ReviewPaper(context.Context, *ScientificCriteriaRequest) (*ScientificReviewResponse, error)
 	mustEmbedUnimplementedGptServiceServer()
 }
 
@@ -120,6 +132,9 @@ func (UnimplementedGptServiceServer) FilterKeyWords(context.Context, *RepeatedTe
 }
 func (UnimplementedGptServiceServer) FormatReferences(context.Context, *TextRequest) (*ReformattedReferenceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FormatReferences not implemented")
+}
+func (UnimplementedGptServiceServer) ReviewPaper(context.Context, *ScientificCriteriaRequest) (*ScientificReviewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReviewPaper not implemented")
 }
 func (UnimplementedGptServiceServer) mustEmbedUnimplementedGptServiceServer() {}
 
@@ -224,6 +239,24 @@ func _GptService_FormatReferences_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GptService_ReviewPaper_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ScientificCriteriaRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GptServiceServer).ReviewPaper(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GptService_ReviewPaper_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GptServiceServer).ReviewPaper(ctx, req.(*ScientificCriteriaRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GptService_ServiceDesc is the grpc.ServiceDesc for GptService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -250,6 +283,10 @@ var GptService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FormatReferences",
 			Handler:    _GptService_FormatReferences_Handler,
+		},
+		{
+			MethodName: "ReviewPaper",
+			Handler:    _GptService_ReviewPaper_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

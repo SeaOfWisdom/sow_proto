@@ -22,6 +22,7 @@ service GptService {
   rpc ExtractDiploma(ExtractDiplomaRequest) returns(ExtractDiplomaResponse);
   rpc FilterKeyWords(RepeatedTextRequest) returns(FilterKeyWordsResponse);
   rpc FormatReferences(TextRequest) returns(ReformattedReferenceResponse);
+  rpc ReviewPaper(ScientificCriteriaRequest) returns(ScientificReviewResponse);
 
 }
 
