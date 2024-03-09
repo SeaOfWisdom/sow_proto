@@ -23,6 +23,7 @@ service GptService {
   rpc FilterKeyWords(RepeatedTextRequest) returns(FilterKeyWordsResponse);
   rpc FormatReferences(TextRequest) returns(ReformattedReferenceResponse);
   rpc ReviewPaper(ScientificCriteriaRequest) returns(ScientificReviewResponse);
+  rpc TransliterateNickname(NicknameRequest) returns(NicknameResponse);
 
 }
 
@@ -85,4 +86,13 @@ message ScientificReviewResponse {
   int64  literature_relevance    = 5;
   string detailed_conclusion     = 6;
   string decision                = 7;
+}
+
+
+message NicknameRequest {
+  string nickname = 1;
+}
+
+message NicknameResponse {
+  string nickname = 1;
 }
