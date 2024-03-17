@@ -19,13 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	GptService_DetectLanguage_FullMethodName   = "/pp.gpt.GptService/DetectLanguage"
-	GptService_ExtractSection_FullMethodName   = "/pp.gpt.GptService/ExtractSection"
-	GptService_ExtractDiploma_FullMethodName   = "/pp.gpt.GptService/ExtractDiploma"
-	GptService_FilterKeyWords_FullMethodName   = "/pp.gpt.GptService/FilterKeyWords"
-	GptService_FormatReferences_FullMethodName = "/pp.gpt.GptService/FormatReferences"
-	GptService_ReviewPaper_FullMethodName      = "/pp.gpt.GptService/ReviewPaper"
-	GptService_CensorNickname_FullMethodName   = "/pp.gpt.GptService/CensorNickname"
+	GptService_DetectLanguage_FullMethodName           = "/pp.gpt.GptService/DetectLanguage"
+	GptService_ExtractSection_FullMethodName           = "/pp.gpt.GptService/ExtractSection"
+	GptService_ExtractDiploma_FullMethodName           = "/pp.gpt.GptService/ExtractDiploma"
+	GptService_FilterKeyWords_FullMethodName           = "/pp.gpt.GptService/FilterKeyWords"
+	GptService_FormatReferences_FullMethodName         = "/pp.gpt.GptService/FormatReferences"
+	GptService_ReviewPaper_FullMethodName              = "/pp.gpt.GptService/ReviewPaper"
+	GptService_CensorNickname_FullMethodName           = "/pp.gpt.GptService/CensorNickname"
+	GptService_TransliterateNameSurname_FullMethodName = "/pp.gpt.GptService/TransliterateNameSurname"
 )
 
 // GptServiceClient is the client API for GptService service.
@@ -39,6 +40,7 @@ type GptServiceClient interface {
 	FormatReferences(ctx context.Context, in *TextRequest, opts ...grpc.CallOption) (*ReformattedReferenceResponse, error)
 	ReviewPaper(ctx context.Context, in *ScientificCriteriaRequest, opts ...grpc.CallOption) (*ScientificReviewResponse, error)
 	CensorNickname(ctx context.Context, in *NicknameRequest, opts ...grpc.CallOption) (*NicknameResponse, error)
+	TransliterateNameSurname(ctx context.Context, in *NameSurnameRequest, opts ...grpc.CallOption) (*NameSurnameResponse, error)
 }
 
 type gptServiceClient struct {
@@ -112,6 +114,15 @@ func (c *gptServiceClient) CensorNickname(ctx context.Context, in *NicknameReque
 	return out, nil
 }
 
+func (c *gptServiceClient) TransliterateNameSurname(ctx context.Context, in *NameSurnameRequest, opts ...grpc.CallOption) (*NameSurnameResponse, error) {
+	out := new(NameSurnameResponse)
+	err := c.cc.Invoke(ctx, GptService_TransliterateNameSurname_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GptServiceServer is the server API for GptService service.
 // All implementations must embed UnimplementedGptServiceServer
 // for forward compatibility
@@ -123,6 +134,7 @@ type GptServiceServer interface {
 	FormatReferences(context.Context, *TextRequest) (*ReformattedReferenceResponse, error)
 	ReviewPaper(context.Context, *ScientificCriteriaRequest) (*ScientificReviewResponse, error)
 	CensorNickname(context.Context, *NicknameRequest) (*NicknameResponse, error)
+	TransliterateNameSurname(context.Context, *NameSurnameRequest) (*NameSurnameResponse, error)
 	mustEmbedUnimplementedGptServiceServer()
 }
 
@@ -150,6 +162,9 @@ func (UnimplementedGptServiceServer) ReviewPaper(context.Context, *ScientificCri
 }
 func (UnimplementedGptServiceServer) CensorNickname(context.Context, *NicknameRequest) (*NicknameResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CensorNickname not implemented")
+}
+func (UnimplementedGptServiceServer) TransliterateNameSurname(context.Context, *NameSurnameRequest) (*NameSurnameResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TransliterateNameSurname not implemented")
 }
 func (UnimplementedGptServiceServer) mustEmbedUnimplementedGptServiceServer() {}
 
@@ -290,6 +305,24 @@ func _GptService_CensorNickname_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GptService_TransliterateNameSurname_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NameSurnameRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GptServiceServer).TransliterateNameSurname(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GptService_TransliterateNameSurname_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GptServiceServer).TransliterateNameSurname(ctx, req.(*NameSurnameRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GptService_ServiceDesc is the grpc.ServiceDesc for GptService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -324,6 +357,10 @@ var GptService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CensorNickname",
 			Handler:    _GptService_CensorNickname_Handler,
+		},
+		{
+			MethodName: "TransliterateNameSurname",
+			Handler:    _GptService_TransliterateNameSurname_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
