@@ -24,7 +24,7 @@ service GptService {
   rpc FormatReferences(TextRequest) returns(ReformattedReferenceResponse);
   rpc ReviewPaper(ScientificCriteriaRequest) returns(ScientificReviewResponse);
   rpc CensorNickname(NicknameRequest) returns(NicknameResponse);
-
+  rpc TransliterateNameSurname(NameSurnameRequest) returns(NameSurnameResponse);
 }
 
 message TextRequest {
@@ -95,4 +95,16 @@ message NicknameRequest {
 
 message NicknameResponse {
   string censoredNickname = 1;
+}
+
+message NameSurnameRequest {
+  string name = 1;
+  string surname = 2;
+  string middle_name = 3;
+}
+
+message NameSurnameResponse {
+  string transliteratedName = 1;
+  string transliteratedSurname = 2;
+  string transliteratedMiddleName = 3;
 }
